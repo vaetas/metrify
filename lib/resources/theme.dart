@@ -23,58 +23,63 @@ class AppTheme {
   );
 
   static ThemeData lightTheme = ThemeData(
+    brightness: Brightness.light,
+    fontFamily: fontFamily,
+    accentColor: Colors.teal,
+    primaryColor: Colors.teal,
+    cardColor: Colors.black12.withOpacity(0.08),
+    textTheme: TextTheme(
+      title: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 20,
+        color: Colors.black,
+      ),
+      display1: TextStyle(
+        fontWeight: FontWeight.w600,
+        color: Colors.black.withOpacity(0.75),
+        fontSize: 18,
+      ),
+      headline: TextStyle(
+        fontWeight: FontWeight.w700,
+        fontSize: 20,
+      ),
+    ),
+    scaffoldBackgroundColor: backgroundColor,
+    pageTransitionsTheme: _pageTransitionTheme,
+    appBarTheme: AppBarTheme(
+      color: backgroundColor,
       brightness: Brightness.light,
-      fontFamily: fontFamily,
-      accentColor: Colors.teal,
-      primaryColor: Colors.teal,
-      cardColor: Colors.black12.withOpacity(0.08),
+      elevation: 0,
+      iconTheme: IconThemeData(
+        color: Colors.black,
+      ),
       textTheme: TextTheme(
         title: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
           color: Colors.black,
-        ),
-        display1: TextStyle(
+          fontFamily: fontFamily,
+          fontSize: appBarFontSize,
           fontWeight: FontWeight.w600,
-          color: Colors.black.withOpacity(0.75),
-          fontSize: 18,
-        ),
-        headline: TextStyle(
-          fontWeight: FontWeight.w700,
-          fontSize: 20,
         ),
       ),
-      scaffoldBackgroundColor: backgroundColor,
-      pageTransitionsTheme: _pageTransitionTheme,
-      appBarTheme: AppBarTheme(
-        color: backgroundColor,
-        brightness: Brightness.light,
-        elevation: 0,
-        iconTheme: IconThemeData(
-          color: Colors.black,
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      foregroundColor: Colors.white,
+      backgroundColor: Colors.teal,
+    ),
+    dividerTheme: _dividerTheme,
+    dividerColor: Colors.black12,
+    buttonTheme: ButtonThemeData(
+      buttonColor: Colors.teal,
+      textTheme: ButtonTextTheme.primary,
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.black.withOpacity(0.70),
         ),
-        textTheme: TextTheme(
-          title: TextStyle(
-            color: Colors.black,
-            fontFamily: fontFamily,
-            fontSize: appBarFontSize,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
       ),
-      inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(),
-      ),
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.teal,
-      ),
-      dividerTheme: _dividerTheme,
-      dividerColor: Colors.black12,
-      buttonTheme: ButtonThemeData(
-        buttonColor: Colors.teal,
-        textTheme: ButtonTextTheme.primary,
-      ));
+    ),
+  );
 
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
@@ -120,11 +125,15 @@ class AppTheme {
       foregroundColor: Colors.black,
       backgroundColor: Colors.tealAccent,
     ),
-    inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(),
-    ),
     dividerTheme: _dividerTheme.copyWith(
       color: Colors.white.withOpacity(0.2),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.white.withOpacity(0.5),
+        ),
+      ),
     ),
   );
 }
