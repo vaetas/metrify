@@ -102,40 +102,51 @@ class ActivityCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
       child: Material(
-        color: Theme.of(context).cardColor,
         borderRadius: _borderRadius,
+        color: Theme.of(context).cardColor,
         child: InkWell(
-          splashColor: activity.color,
+          splashColor: activity.color?.withOpacity(0.5),
           borderRadius: _borderRadius,
           onTap: onPressed,
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            height: 125,
-            child: Stack(
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      child: Text(
-                        activity.name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                border: Border(
+                  left: BorderSide(
+                    width: 8,
+                    color: activity.color?.withOpacity(0.75) ?? Theme.of(context).cardColor,
+                  ),
+                ),
+              ),
+              height: 100,
+              child: Stack(
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                        child: Text(
+                          activity.name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
                         ),
                       ),
-                    ),
-                    Text(
-                      '${activity.entries.length} entries',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).textTheme.body1.color.withOpacity(0.5),
+                      Text(
+                        '${activity.entries.length} ${activity.entries.length == 1 ? 'entry' : 'entries'}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context).textTheme.body1.color.withOpacity(0.5),
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              ],
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

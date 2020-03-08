@@ -27,7 +27,7 @@ class AppTheme {
       fontFamily: fontFamily,
       accentColor: Colors.teal,
       primaryColor: Colors.teal,
-      cardColor: Colors.black12,
+      cardColor: Colors.black12.withOpacity(0.08),
       textTheme: TextTheme(
         title: TextStyle(
           fontWeight: FontWeight.bold,
