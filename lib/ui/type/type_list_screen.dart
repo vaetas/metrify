@@ -94,7 +94,7 @@ class _TypeListScreenState extends State<TypeListScreen> {
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
                     return Slidable(
-                      actionPane: SlidableBehindActionPane(),
+                      actionPane: SlidableScrollActionPane(),
                       actionExtentRatio: 0.2,
                       actions: <Widget>[
                         IconSlideAction(
