@@ -5,6 +5,7 @@ import 'package:metrify/models/activity.dart';
 import 'package:metrify/models/entry.dart';
 import 'package:metrify/models/type.dart';
 import 'package:metrify/ui/widgets/appbar_submit_button.dart';
+import 'package:metrify/ui/widgets/dropdown_button.dart';
 import 'package:metrify/utils/parsing.dart';
 
 class AddEntryScreen extends StatefulWidget {
@@ -96,7 +97,10 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
                           padding: EdgeInsets.symmetric(horizontal: 15),
                           child: TextField(
                             controller: numericValueController,
-                            decoration: InputDecoration(suffixText: numericType.unit),
+                            decoration: InputDecoration(
+                              suffixText: numericType.unit,
+                              hintText: 'Value',
+                            ),
                           ),
                         );
                         break;
@@ -104,7 +108,8 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
                         final enumType = selectedActivity.type.enumType;
 
                         valueInput = Container(
-                          child: DropdownButton<EnumTypeValue>(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: AppDropdownButton<EnumTypeValue>(
                             onChanged: (value) {
                               setState(() {
                                 _selectedEnum = value;
@@ -112,23 +117,16 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
                             },
                             hint: Text('Select value'),
                             value: _selectedEnum,
-                            items: enumType.values
-                                .map(
-                                  (e) => DropdownMenuItem(
-                                    value: e,
-                                    child: Text(e.name),
-                                  ),
-                                )
-                                .toList(),
+                            items: enumType.values,
+                            itemFormat: (value) => value.name,
                           ),
                         );
                         break;
                       case TypeKind.range:
                         final rangeType = selectedActivity.type.rangeType;
 
-                        print(selectedActivity.type.rangeType.min);
-                        print(selectedActivity.type.rangeType.max);
                         valueInput = Container(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
                           child: Slider(
                             min: rangeType.min,
                             max: rangeType.max,
@@ -149,16 +147,11 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
                   return Column(
                     children: <Widget>[
                       Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        margin: EdgeInsets.all(15),
-                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                        child: DropdownButton<Activity>(
-                          underline: Container(),
+                        margin: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                        child: AppDropdownButton<Activity>(
+                          value: selectedActivity,
+                          items: value.values.toList(),
                           hint: Text('Select activity'),
-                          isExpanded: true,
                           onChanged: (activity) {
                             if (activity != selectedActivity) {
                               setState(() {
@@ -168,13 +161,7 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
                               });
                             }
                           },
-                          value: selectedActivity,
-                          items: value.values.map((e) {
-                            return DropdownMenuItem(
-                              value: e,
-                              child: Text(e.name),
-                            );
-                          }).toList(),
+                          itemFormat: (activity) => activity.name,
                         ),
                       ),
                       valueInput,

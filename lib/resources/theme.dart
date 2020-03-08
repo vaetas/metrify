@@ -73,6 +73,8 @@ class AppTheme {
       textTheme: ButtonTextTheme.primary,
     ),
     inputDecorationTheme: InputDecorationTheme(
+      fillColor: Colors.black12.withOpacity(0.08),
+      filled: true,
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(
           color: Colors.black.withOpacity(0.70),
@@ -129,6 +131,8 @@ class AppTheme {
       color: Colors.white.withOpacity(0.2),
     ),
     inputDecorationTheme: InputDecorationTheme(
+      fillColor: Colors.grey.withOpacity(0.5),
+      filled: true,
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(
           color: Colors.white.withOpacity(0.5),

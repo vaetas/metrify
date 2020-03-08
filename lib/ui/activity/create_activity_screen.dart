@@ -7,6 +7,7 @@ import 'package:metrify/models/entry.dart';
 import 'package:metrify/models/type.dart';
 import 'package:metrify/ui/widgets/appbar_submit_button.dart';
 import 'package:metrify/ui/widgets/color_picker.dart';
+import 'package:metrify/ui/widgets/dropdown_button.dart';
 
 class CreateActivityScreen extends StatefulWidget {
   @override
@@ -77,20 +78,16 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
             TextField(
               controller: _nameController,
               decoration: InputDecoration(labelText: 'Name'),
+              autocorrect: true,
+              textCapitalization: TextCapitalization.words,
             ),
             ValueListenableBuilder<Box<ActivityType>>(
               valueListenable: _typeBox.listenable(),
               builder: (BuildContext context, Box<ActivityType> value, Widget child) {
                 return Container(
-                  margin: const EdgeInsets.only(top: 15, left: 12, right: 18),
-                  child: DropdownButton<ActivityType>(
-                    underline: Container(),
-                    items: value.values
-                        .map((e) => DropdownMenuItem(
-                              value: e,
-                              child: Text(e.name),
-                            ))
-                        .toList(),
+                  margin: const EdgeInsets.only(top: 15),
+                  child: AppDropdownButton<ActivityType>(
+                    items: value.values.toList(),
                     onChanged: (value) {
                       setState(() {
                         _selectedType = value;
@@ -98,7 +95,7 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
                     },
                     value: _selectedType,
                     hint: Text('Select type'),
-                    isExpanded: true,
+                    itemFormat: (activity) => activity.name,
                   ),
                 );
               },
