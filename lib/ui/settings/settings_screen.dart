@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:metrify/resources/routes.dart';
+import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -9,7 +10,9 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar(title: Text('Settings')),
+          SliverAppBar(
+            title: Text('Settings'),
+          ),
           SliverList(
             delegate: SliverChildListDelegate([
               ListTile(
@@ -34,17 +37,22 @@ class SettingsScreen extends StatelessWidget {
 //                },
 //              ),
               Divider(),
-              ListTile(
-                title: Text('About this app'),
-                subtitle: Text('Report issues & check source code'),
-                leading: Icon(FeatherIcons.helpCircle),
-                onTap: () async {
-                  final url = r'https://github.com/vaetas/metrify';
-                  if (await canLaunch(url)) {
-                    await launch(url);
-                  } else {
-                    throw 'Could not launch $url';
-                  }
+              FutureBuilder<PackageInfo>(
+                future: PackageInfo.fromPlatform(),
+                builder: (context, snapshot) {
+                  return ListTile(
+                    title: Text('About'),
+                    subtitle: Text(snapshot.hasData ? 'v' + snapshot.data.version : ''),
+                    leading: Icon(FeatherIcons.helpCircle),
+                    onTap: () async {
+                      final url = r'https://github.com/vaetas/metrify';
+                      if (await canLaunch(url)) {
+                        await launch(url);
+                      } else {
+                        throw 'Could not launch $url';
+                      }
+                    },
+                  );
                 },
               ),
             ]),
