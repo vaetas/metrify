@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
         icon: Icon(Icons.add),
         heroTag: 'AddEntryFab',
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: ValueListenableBuilder<Box<Activity>>(
         valueListenable: Hive.box<Activity>(activityBox).listenable(),
         builder: (BuildContext context, Box<Activity> value, Widget _) {
