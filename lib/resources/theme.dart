@@ -12,68 +12,69 @@ class AppTheme {
 
   static const Color backgroundColor = Colors.white;
 
-  static const PageTransitionsTheme pageTransition = PageTransitionsTheme(builders: {
+  static const PageTransitionsTheme _pageTransitionTheme = PageTransitionsTheme(builders: {
     TargetPlatform.android: ZoomPageTransitionsBuilder(),
   });
 
+  static const _dividerTheme = DividerThemeData(
+    thickness: 1,
+    indent: 0,
+    space: 4,
+  );
+
   static ThemeData lightTheme = ThemeData(
-    brightness: Brightness.light,
-    fontFamily: fontFamily,
-    accentColor: Colors.teal,
-    primaryColor: Colors.teal,
-    cardColor: Colors.black12,
-    textTheme: TextTheme(
-      title: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 20,
-        color: Colors.black,
-      ),
-      display1: TextStyle(
-        fontWeight: FontWeight.w600,
-        color: Colors.black.withOpacity(0.75),
-        fontSize: 18,
-      ),
-      headline: TextStyle(
-        fontWeight: FontWeight.w700,
-        fontSize: 20,
-      ),
-    ),
-    scaffoldBackgroundColor: backgroundColor,
-    pageTransitionsTheme: pageTransition,
-    appBarTheme: AppBarTheme(
-      color: backgroundColor,
       brightness: Brightness.light,
-      elevation: 0,
-      iconTheme: IconThemeData(
-        color: Colors.black,
-      ),
+      fontFamily: fontFamily,
+      accentColor: Colors.teal,
+      primaryColor: Colors.teal,
+      cardColor: Colors.black12,
       textTheme: TextTheme(
         title: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
           color: Colors.black,
-          fontFamily: fontFamily,
-          fontSize: appBarFontSize,
+        ),
+        display1: TextStyle(
           fontWeight: FontWeight.w600,
+          color: Colors.black.withOpacity(0.75),
+          fontSize: 18,
+        ),
+        headline: TextStyle(
+          fontWeight: FontWeight.w700,
+          fontSize: 20,
         ),
       ),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(),
-    ),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
-      foregroundColor: Colors.white,
-      backgroundColor: Colors.teal,
-    ),
-    dividerTheme: DividerThemeData(
-      thickness: 1,
-      indent: 0,
-      space: 4,
-    ),
-    dividerColor: Colors.black12,
-    buttonTheme: ButtonThemeData(
-      buttonColor: Colors.teal,
-      textTheme: ButtonTextTheme.primary,
-    )
-  );
+      scaffoldBackgroundColor: backgroundColor,
+      pageTransitionsTheme: _pageTransitionTheme,
+      appBarTheme: AppBarTheme(
+        color: backgroundColor,
+        brightness: Brightness.light,
+        elevation: 0,
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+        textTheme: TextTheme(
+          title: TextStyle(
+            color: Colors.black,
+            fontFamily: fontFamily,
+            fontSize: appBarFontSize,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(),
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.teal,
+      ),
+      dividerTheme: _dividerTheme,
+      dividerColor: Colors.black12,
+      buttonTheme: ButtonThemeData(
+        buttonColor: Colors.teal,
+        textTheme: ButtonTextTheme.primary,
+      ));
 
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
@@ -82,7 +83,7 @@ class AppTheme {
     accentColor: Colors.tealAccent,
     cardColor: Colors.grey.withOpacity(0.5),
     primaryColor: Colors.white,
-    pageTransitionsTheme: pageTransition,
+    pageTransitionsTheme: _pageTransitionTheme,
     textTheme: TextTheme(
       title: TextStyle(
         fontWeight: FontWeight.w700,
@@ -121,6 +122,9 @@ class AppTheme {
     ),
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(),
+    ),
+    dividerTheme: _dividerTheme.copyWith(
+      color: Colors.white.withOpacity(0.2),
     ),
   );
 }
