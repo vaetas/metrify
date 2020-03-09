@@ -60,7 +60,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                     final entry = activity.entries[index];
 
                     return Slidable(
-                      actionPane: SlidableBehindActionPane(),
+                      actionPane: SlidableScrollActionPane(),
                       actionExtentRatio: 0.15,
                       actions: <Widget>[
                         IconSlideAction(
