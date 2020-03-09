@@ -97,6 +97,7 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
                           padding: EdgeInsets.symmetric(horizontal: 15),
                           child: TextField(
                             controller: numericValueController,
+                            keyboardType: TextInputType.numberWithOptions(decimal: true, signed: true),
                             decoration: InputDecoration(
                               suffixText: numericType.unit,
                               hintText: 'Value',
