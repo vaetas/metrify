@@ -38,10 +38,14 @@ class _ActivityListScreenState extends State<ActivityListScreen> {
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
               onPressed: () {
-                activity.entries.forEach((e) {
-                  e.delete();
-                });
-                activity.delete();
+                activity
+                  ..entries.forEach((e) {
+                    if (e.isInBox) {
+                      e.delete();
+                    }
+                  })
+                  ..entries.clear()
+                  ..delete();
                 Navigator.pop(context);
               },
             ),
