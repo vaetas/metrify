@@ -57,7 +57,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    final entry = activity.entries[index];
+                    final entry = activity.entries.reversed.elementAt(index);
 
                     return Slidable(
                       actionPane: SlidableScrollActionPane(),
