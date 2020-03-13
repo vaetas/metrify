@@ -21,13 +21,14 @@ class ActivityAdapter extends TypeAdapter<Activity> {
       (fields[1] as List)?.cast<Category>(),
       fields[3] as ActivityType,
       (fields[2] as List)?.cast<Entry>(),
+      grouping: fields[5] as EntryGrouping,
     ).._color = fields[4] as int;
   }
 
   @override
   void write(BinaryWriter writer, Activity obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -37,6 +38,8 @@ class ActivityAdapter extends TypeAdapter<Activity> {
       ..writeByte(3)
       ..write(obj.type)
       ..writeByte(4)
-      ..write(obj._color);
+      ..write(obj._color)
+      ..writeByte(5)
+      ..write(obj.grouping);
   }
 }

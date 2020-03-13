@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrify/models/activity.dart';
 import 'package:metrify/models/category.dart';
 import 'package:metrify/models/entry.dart';
+import 'package:metrify/models/group.dart';
 import 'package:metrify/models/type.dart';
 import 'package:metrify/resources/routes.dart';
 import 'package:metrify/resources/theme.dart';
@@ -62,7 +63,8 @@ Future _initHive() async {
     ..registerAdapter(NumericTypeAdapter())
     ..registerAdapter(EnumTypeAdapter())
     ..registerAdapter(EnumTypeValueAdapter())
-    ..registerAdapter(RangeTypeAdapter());
+    ..registerAdapter(RangeTypeAdapter())
+    ..registerAdapter(EntryGroupingAdapter());
 
   await Hive.openBox(configBox);
   await Hive.openBox<Category>(categoryBox);
