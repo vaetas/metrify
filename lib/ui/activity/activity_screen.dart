@@ -36,7 +36,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
   @override
   void initState() {
     super.initState();
-    _grouping = widget.activity.grouping;
+    _grouping = widget.activity.grouping ?? EntryGrouping.minute;
   }
 
   void _showGroupingModal() {
