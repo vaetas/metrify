@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:metrify/models/group.dart';
 import 'package:metrify/models/type.dart';
 
 part 'entry.g.dart';
@@ -44,4 +45,29 @@ class Entry extends HiveObject {
 
   @override
   int get hashCode => timestamp.hashCode ^ value.hashCode;
+}
+
+class GroupedEntry {
+  final DateTime timestamp;
+
+  final EntryGrouping type;
+
+  final List<Entry> entries;
+
+  GroupedEntry({this.timestamp, this.type, this.entries});
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is GroupedEntry &&
+          runtimeType == other.runtimeType &&
+          timestamp == other.timestamp &&
+          type == other.type &&
+          entries == other.entries;
+
+  @override
+  int get hashCode => timestamp.hashCode ^ type.hashCode ^ entries.hashCode;
+
+  @override
+  String toString() => 'GroupedEntry{timestamp: $timestamp, type: $type, entries: $entries}';
 }

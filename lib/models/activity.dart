@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:metrify/models/category.dart';
 import 'package:metrify/models/entry.dart';
+import 'package:metrify/models/group.dart';
 import 'package:metrify/models/type.dart';
 
 part 'activity.g.dart';
@@ -25,11 +26,21 @@ class Activity extends HiveObject {
   @HiveField(4)
   int _color;
 
+  @HiveField(5)
+  EntryGrouping grouping;
+
   Color get color => _color != null ? Color(_color) : null;
 
   set color(Color color) => _color = color?.value;
 
-  Activity(this.name, this.categories, this.type, this.entries, {Color color}) {
+  Activity(
+    this.name,
+    this.categories,
+    this.type,
+    this.entries, {
+    Color color,
+    this.grouping = EntryGrouping.minute,
+  }) {
     _color = color?.value;
   }
 

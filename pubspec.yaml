@@ -18,6 +18,8 @@ dependencies:
   url_launcher: ^5.4.2
   intl: ^0.16.1
   package_info: ^0.4.0+14
+  flutter_sticky_header: ^0.4.2
+  supercharged: ^1.2.1
 
 dev_dependencies:
   flutter_test:
