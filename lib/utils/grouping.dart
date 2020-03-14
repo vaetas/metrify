@@ -78,7 +78,6 @@ String formatGroupDate(DateTime timestamp, EntryGrouping type) {
       return DateFormat('MMMM d').format(timestamp);
     case EntryGrouping.week:
       final lastMonday = _getLastMonday(timestamp);
-      print(lastMonday);
       final start = DateFormat('MMM d').format(lastMonday);
       final end = DateFormat('MMM d').format(lastMonday.add(Duration(days: 6)));
       return '$start — $end';
@@ -95,8 +94,6 @@ DateTime _getLastMonday(DateTime timestamp) {
   DateTime date = DateTime(timestamp.year, timestamp.month, timestamp.day).subtract(
     Duration(days: (DateTime.monday - timestamp.weekday).abs()),
   );
-
-  print('Found $date');
 
   return date;
 }
