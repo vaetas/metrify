@@ -18,7 +18,7 @@
 
 import 'package:flutter/material.dart';
 
-typedef String ItemFormatFn(dynamic item);
+typedef ItemFormatFn<T> = String Function(T object);
 
 /// Customized [DropdownButton] to better fit app theme.
 class AppDropdownButton<T> extends StatelessWidget {
@@ -29,7 +29,7 @@ class AppDropdownButton<T> extends StatelessWidget {
   final List<T> items;
 
   /// Function to get String from single [item].
-  final ItemFormatFn itemFormat;
+  final ItemFormatFn<T> itemFormat;
 
   final Widget hint;
   final ValueChanged onChanged;
