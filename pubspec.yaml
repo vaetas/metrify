@@ -20,12 +20,14 @@ dependencies:
   package_info: ^0.4.0+14
   flutter_sticky_header: ^0.4.2
   supercharged: ^1.2.1
+  json_annotation: ^3.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   hive_generator: ^0.7.0+2
   build_runner: ^1.7.4
+  json_serializable: ^3.2.5
 
 flutter:
   uses-material-design: true

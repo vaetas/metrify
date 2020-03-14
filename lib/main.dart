@@ -30,6 +30,7 @@ import 'package:metrify/ui/activity/activity_list_screen.dart';
 import 'package:metrify/ui/activity/create_activity_screen.dart';
 import 'package:metrify/ui/category/category_list.dart';
 import 'package:metrify/ui/category/create_category_screen.dart';
+import 'package:metrify/ui/export/export_screen.dart';
 import 'package:metrify/ui/home/home_screen.dart';
 import 'package:metrify/ui/root.dart';
 import 'package:metrify/ui/settings/settings_screen.dart';
@@ -60,6 +61,7 @@ class App extends StatelessWidget {
         Routes.typeList: (_) => TypeListScreen(),
         Routes.categoryList: (_) => CategoryListScreen(),
         Routes.categoryCreate: (_) => CreateCategoryScreen(),
+        Routes.export: (_) => ExportScreen(),
       },
       themeMode: ThemeMode.system,
       theme: AppTheme.lightTheme,

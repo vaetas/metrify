@@ -88,6 +88,8 @@ String formatGroupDate(DateTime timestamp, EntryGrouping type) {
     case EntryGrouping.minute:
       return DateFormat('HH:mm, MMMM d').format(timestamp);
   }
+
+  return '';
 }
 
 DateTime _getLastMonday(DateTime timestamp) {

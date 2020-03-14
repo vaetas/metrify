@@ -177,3 +177,115 @@ class RangeTypeAdapter extends TypeAdapter<RangeType> {
       ..write(obj.max);
   }
 }
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+ActivityType _$ActivityTypeFromJson(Map<String, dynamic> json) {
+  return ActivityType(
+    json['name'] as String,
+    _$enumDecodeNullable(_$TypeKindEnumMap, json['kind']),
+    numericType:
+        _numericTypeFromJson(json['numericType'] as Map<String, dynamic>),
+    enumType: _enumTypeFromJson(json['enumType'] as Map<String, dynamic>),
+    rangeType: _rangeTypeFromJson(json['rangeType'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$ActivityTypeToJson(ActivityType instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'kind': _$TypeKindEnumMap[instance.kind],
+      'numericType': _numericTypeToJson(instance.numericType),
+      'enumType': _enumTypeToJson(instance.enumType),
+      'rangeType': _rangeTypeToJson(instance.rangeType),
+    };
+
+T _$enumDecode<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
+  if (source == null) {
+    throw ArgumentError('A value must be provided. Supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+
+  final value = enumValues.entries
+      .singleWhere((e) => e.value == source, orElse: () => null)
+      ?.key;
+
+  if (value == null && unknownValue == null) {
+    throw ArgumentError('`$source` is not one of the supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+  return value ?? unknownValue;
+}
+
+T _$enumDecodeNullable<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
+}
+
+const _$TypeKindEnumMap = {
+  TypeKind.numeric: 'numeric',
+  TypeKind.enumeration: 'enumeration',
+  TypeKind.range: 'range',
+};
+
+NumericType _$NumericTypeFromJson(Map<String, dynamic> json) {
+  return NumericType(
+    json['unit'] as String,
+  );
+}
+
+Map<String, dynamic> _$NumericTypeToJson(NumericType instance) =>
+    <String, dynamic>{
+      'unit': instance.unit,
+    };
+
+EnumType _$EnumTypeFromJson(Map<String, dynamic> json) {
+  return EnumType(
+    (json['values'] as List)
+        ?.map((e) => e == null
+            ? null
+            : EnumTypeValue.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
+}
+
+Map<String, dynamic> _$EnumTypeToJson(EnumType instance) => <String, dynamic>{
+      'values': instance.values,
+    };
+
+EnumTypeValue _$EnumTypeValueFromJson(Map<String, dynamic> json) {
+  return EnumTypeValue(
+    json['weight'] as int,
+    json['name'] as String,
+  );
+}
+
+Map<String, dynamic> _$EnumTypeValueToJson(EnumTypeValue instance) =>
+    <String, dynamic>{
+      'weight': instance.weight,
+      'name': instance.name,
+    };
+
+RangeType _$RangeTypeFromJson(Map<String, dynamic> json) {
+  return RangeType(
+    (json['min'] as num)?.toDouble(),
+    (json['max'] as num)?.toDouble(),
+  );
+}
+
+Map<String, dynamic> _$RangeTypeToJson(RangeType instance) => <String, dynamic>{
+      'min': instance.min,
+      'max': instance.max,
+    };

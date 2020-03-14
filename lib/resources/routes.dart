@@ -26,4 +26,5 @@ class Routes {
   static const String categoryList = '/category/list';
   static const String categoryCreate = '/category/create';
   static const String settings = '/settings';
+  static const String export = '/export';
 }

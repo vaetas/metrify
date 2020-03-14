@@ -17,6 +17,7 @@
  */
 
 import 'package:hive/hive.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'type.g.dart';
 
@@ -40,6 +41,19 @@ Map<TypeKind, String> typeKindName = {
   TypeKind.range: 'Range',
 };
 
+Map<String, dynamic> _numericTypeToJson(NumericType type) => type?.toJson();
+
+Map<String, dynamic> _enumTypeToJson(EnumType type) => type?.toJson();
+
+Map<String, dynamic> _rangeTypeToJson(RangeType type) => type?.toJson();
+
+NumericType _numericTypeFromJson(Map<String, dynamic> json) => NumericType.fromJson(json);
+
+EnumType _enumTypeFromJson(Map<String, dynamic> json) => EnumType.fromJson(json);
+
+RangeType _rangeTypeFromJson(Map<String, dynamic> json) => RangeType.fromJson(json);
+
+@JsonSerializable()
 @HiveType(typeId: 24)
 class ActivityType extends HiveObject {
   @HiveField(0)
@@ -48,12 +62,15 @@ class ActivityType extends HiveObject {
   @HiveField(1)
   TypeKind kind;
 
+  @JsonKey(toJson: _numericTypeToJson, fromJson: _numericTypeFromJson)
   @HiveField(2)
   NumericType numericType;
 
+  @JsonKey(toJson: _enumTypeToJson, fromJson: _enumTypeFromJson)
   @HiveField(3)
   EnumType enumType;
 
+  @JsonKey(toJson: _rangeTypeToJson, fromJson: _rangeTypeFromJson)
   @HiveField(4)
   RangeType rangeType;
 
@@ -64,6 +81,10 @@ class ActivityType extends HiveObject {
     this.enumType,
     this.rangeType,
   });
+
+  factory ActivityType.fromJson(Map<String, dynamic> json) => _$ActivityTypeFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ActivityTypeToJson(this);
 
   @override
   String toString() {
@@ -85,12 +106,17 @@ class ActivityType extends HiveObject {
   int get hashCode => name.hashCode ^ kind.hashCode ^ numericType.hashCode ^ enumType.hashCode ^ rangeType.hashCode;
 }
 
+@JsonSerializable()
 @HiveType(typeId: 25)
 class NumericType extends HiveObject {
   @HiveField(0)
   String unit;
 
   NumericType(this.unit);
+
+  factory NumericType.fromJson(Map<String, dynamic> json) => _$NumericTypeFromJson(json);
+
+  Map<String, dynamic> toJson() => _$NumericTypeToJson(this);
 
   @override
   String toString() => 'NumericType{unit: $unit}';
@@ -103,12 +129,17 @@ class NumericType extends HiveObject {
   int get hashCode => unit.hashCode;
 }
 
+@JsonSerializable()
 @HiveType(typeId: 26)
 class EnumType extends HiveObject {
   @HiveField(0)
   List<EnumTypeValue> values;
 
   EnumType(this.values);
+
+  factory EnumType.fromJson(Map<String, dynamic> json) => _$EnumTypeFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EnumTypeToJson(this);
 
   @override
   String toString() => 'EnumType{values: $values}';
@@ -121,6 +152,7 @@ class EnumType extends HiveObject {
   int get hashCode => values.hashCode;
 }
 
+@JsonSerializable()
 @HiveType(typeId: 27)
 class EnumTypeValue extends HiveObject {
   @HiveField(0)
@@ -130,6 +162,10 @@ class EnumTypeValue extends HiveObject {
   String name;
 
   EnumTypeValue(this.weight, this.name);
+
+  factory EnumTypeValue.fromJson(Map<String, dynamic> json) => _$EnumTypeValueFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EnumTypeValueToJson(this);
 
   @override
   String toString() => 'EnumTypeValue{weight: $weight, name: $name}';
@@ -143,6 +179,7 @@ class EnumTypeValue extends HiveObject {
   int get hashCode => weight.hashCode ^ name.hashCode;
 }
 
+@JsonSerializable()
 @HiveType(typeId: 28)
 class RangeType extends HiveObject {
   @HiveField(0)
@@ -152,6 +189,10 @@ class RangeType extends HiveObject {
   double max;
 
   RangeType(this.min, this.max);
+
+  factory RangeType.fromJson(Map<String, dynamic> json) => _$RangeTypeFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RangeTypeToJson(this);
 
   @override
   String toString() => 'RangeType{start: $min, end: $max}';

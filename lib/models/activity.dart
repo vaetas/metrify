@@ -18,6 +18,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:metrify/models/category.dart';
 import 'package:metrify/models/entry.dart';
 import 'package:metrify/models/group.dart';
@@ -27,6 +28,15 @@ part 'activity.g.dart';
 
 const String activityBox = 'activities';
 
+List<Map<String, dynamic>> _entriesToJson(List<Entry> entries) => entries.map((e) => e.toJson()).toList();
+
+List<Entry> _entriesFromJson(List<Map<String, dynamic>> json) => json.map((e) => Entry.fromJson(e)).toList();
+
+Map<String, dynamic> _typeToJson(ActivityType type) => type.toJson();
+
+ActivityType _typeFromJson(Map<String, dynamic> json) => ActivityType.fromJson(json);
+
+@JsonSerializable()
 @HiveType(typeId: 10)
 class Activity extends HiveObject {
   @HiveField(0)
@@ -35,18 +45,22 @@ class Activity extends HiveObject {
   @HiveField(1)
   List<Category> categories;
 
+  @JsonKey(toJson: _entriesToJson, fromJson: _entriesFromJson)
   @HiveField(2)
   List<Entry> entries;
 
+  @JsonKey(toJson: _typeToJson, fromJson: _typeFromJson)
   @HiveField(3)
   ActivityType type;
 
+  @JsonKey(name: 'color')
   @HiveField(4)
   int _color;
 
   @HiveField(5)
   EntryGrouping grouping;
 
+  @JsonKey(ignore: true)
   Color get color => _color != null ? Color(_color) : null;
 
   set color(Color color) => _color = color?.value;
@@ -61,6 +75,10 @@ class Activity extends HiveObject {
   }) {
     _color = color?.value;
   }
+
+  factory Activity.fromJson(Map<String, dynamic> json) => _$ActivityFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ActivityToJson(this);
 
   @override
   String toString() {

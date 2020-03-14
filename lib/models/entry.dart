@@ -17,6 +17,7 @@
  */
 
 import 'package:hive/hive.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:metrify/models/group.dart';
 import 'package:metrify/models/type.dart';
 
@@ -24,8 +25,14 @@ part 'entry.g.dart';
 
 const String entryBox = 'entries';
 
+int _dateTimeToJson(DateTime dateTime) => dateTime.millisecondsSinceEpoch;
+
+DateTime _dateTimeFromJson(int unixTime) => DateTime.fromMillisecondsSinceEpoch(unixTime);
+
+@JsonSerializable()
 @HiveType(typeId: 12)
 class Entry extends HiveObject {
+  @JsonKey(toJson: _dateTimeToJson, fromJson: _dateTimeFromJson)
   @HiveField(0)
   DateTime timestamp;
 
@@ -33,6 +40,10 @@ class Entry extends HiveObject {
   double value;
 
   Entry(this.timestamp, this.value);
+
+  factory Entry.fromJson(Map<String, dynamic> json) => _$EntryFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EntryToJson(this);
 
   @override
   String toString() => 'Entry{timestamp: $timestamp, value: $value}';

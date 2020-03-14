@@ -55,6 +55,14 @@ class SettingsScreen extends StatelessWidget {
 //                },
 //              ),
               Divider(),
+              ListTile(
+                title: Text('Export'),
+                leading: Icon(FeatherIcons.save),
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.export);
+                },
+              ),
+              Divider(),
               FutureBuilder<PackageInfo>(
                 future: PackageInfo.fromPlatform(),
                 builder: (context, snapshot) {

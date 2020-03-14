@@ -29,3 +29,17 @@ class CategoryAdapter extends TypeAdapter<Category> {
       ..write(obj.name);
   }
 }
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+Category _$CategoryFromJson(Map<String, dynamic> json) {
+  return Category(
+    json['name'] as String,
+  );
+}
+
+Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
+      'name': instance.name,
+    };

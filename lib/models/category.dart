@@ -17,17 +17,23 @@
  */
 
 import 'package:hive/hive.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'category.g.dart';
 
 const String categoryBox = 'categories';
 
+@JsonSerializable()
 @HiveType(typeId: 11)
 class Category extends HiveObject {
   @HiveField(0)
   String name;
 
   Category(this.name);
+
+  factory Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CategoryToJson(this);
 
   @override
   String toString() => 'Category{name: $name}';
