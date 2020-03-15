@@ -113,7 +113,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                 pinned: true,
                 actions: <Widget>[
                   PopupMenuButton(
-                    color: Theme.of(context).scaffoldBackgroundColor,
+                    color: Theme.of(context).dialogBackgroundColor,
                     itemBuilder: (context) => ActivityMenuItem.values.map((a) {
                       return PopupMenuItem(
                         value: a,
