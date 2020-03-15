@@ -32,6 +32,6 @@ Use 120 characters per line for formatting.
 
 - [ ] Notification reminders for activities.
 
-- [ ] Allow grouping of entries.
-
 - [ ] Export/import.
+
+- [x] Allow grouping of entries.
