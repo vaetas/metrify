@@ -17,8 +17,7 @@
  */
 
 import 'package:flutter/material.dart';
-
-typedef ItemFormatFn<T> = String Function(T object);
+import 'package:metrify/ui/widgets/utils.dart';
 
 /// Customized [DropdownButton] to better fit app theme.
 class AppDropdownButton<T> extends StatelessWidget {
@@ -29,7 +28,7 @@ class AppDropdownButton<T> extends StatelessWidget {
   final List<T> items;
 
   /// Function to get String from single [item].
-  final ItemFormatFn<T> itemFormat;
+  final TransformFn<T, String> itemNameFn;
 
   final Widget hint;
   final ValueChanged onChanged;
@@ -40,7 +39,7 @@ class AppDropdownButton<T> extends StatelessWidget {
     this.items,
     this.hint,
     @required this.onChanged,
-    this.itemFormat,
+    this.itemNameFn,
   }) : super(key: key);
 
   @override
@@ -72,7 +71,7 @@ class AppDropdownButton<T> extends StatelessWidget {
             items: items.map((i) {
               return DropdownMenuItem(
                 value: i,
-                child: Text(itemFormat != null ? itemFormat(i) : i.toString()),
+                child: Text(itemNameFn != null ? itemNameFn(i) : i.toString()),
               );
             }).toList(),
           ),

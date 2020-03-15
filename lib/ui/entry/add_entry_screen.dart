@@ -137,7 +137,7 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
                             hint: Text('Select value'),
                             value: _selectedEnum,
                             items: enumType.values,
-                            itemFormat: (value) => value.name,
+                            itemNameFn: (value) => value.name,
                           ),
                         );
                         break;
@@ -180,7 +180,7 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
                               });
                             }
                           },
-                          itemFormat: (activity) => activity.name,
+                          itemNameFn: (activity) => activity.name,
                         ),
                       ),
                       valueInput,

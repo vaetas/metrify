@@ -113,7 +113,7 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
                     },
                     value: _selectedType,
                     hint: Text('Select type'),
-                    itemFormat: (activity) => activity.name,
+                    itemNameFn: (activity) => activity.name,
                   ),
                 );
               },
