@@ -21,6 +21,7 @@ dependencies:
   flutter_sticky_header: ^0.4.2
   supercharged: ^1.2.1
   json_annotation: ^3.0.1
+  permission_handler: ^4.4.0+hotfix.1
 
 dev_dependencies:
   flutter_test:
