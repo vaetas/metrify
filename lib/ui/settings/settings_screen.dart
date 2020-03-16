@@ -47,13 +47,13 @@ class SettingsScreen extends StatelessWidget {
                   Navigator.pushNamed(context, Routes.typeList);
                 },
               ),
-//              ListTile(
-//                title: Text('Categories'),
-//                leading: Icon(FeatherIcons.tag),
-//                onTap: () {
-//                  Navigator.pushNamed(context, Routes.categoryList);
-//                },
-//              ),
+              ListTile(
+                title: Text('Categories'),
+                leading: Icon(FeatherIcons.tag),
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.categoryList);
+                },
+              ),
               Divider(),
               ListTile(
                 title: Text('Export'),
