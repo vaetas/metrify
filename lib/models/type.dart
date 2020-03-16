@@ -129,9 +129,15 @@ class NumericType extends HiveObject {
   int get hashCode => unit.hashCode;
 }
 
+List<Map<String, dynamic>> _enumTypeValueToJson(List<EnumTypeValue> values) => values.map((v) => v.toJson()).toList();
+
+List<EnumTypeValue> _enumTypeValueFromJson(List<Map<String, dynamic>> json) =>
+    json.map((v) => EnumTypeValue.fromJson(v)).toList();
+
 @JsonSerializable()
 @HiveType(typeId: 26)
 class EnumType extends HiveObject {
+  @JsonKey(toJson: _enumTypeValueToJson, fromJson: _enumTypeValueFromJson)
   @HiveField(0)
   List<EnumTypeValue> values;
 

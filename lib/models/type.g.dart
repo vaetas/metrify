@@ -253,16 +253,12 @@ Map<String, dynamic> _$NumericTypeToJson(NumericType instance) =>
 
 EnumType _$EnumTypeFromJson(Map<String, dynamic> json) {
   return EnumType(
-    (json['values'] as List)
-        ?.map((e) => e == null
-            ? null
-            : EnumTypeValue.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    _enumTypeValueFromJson(json['values'] as List<Map<String, dynamic>>),
   );
 }
 
 Map<String, dynamic> _$EnumTypeToJson(EnumType instance) => <String, dynamic>{
-      'values': instance.values,
+      'values': _enumTypeValueToJson(instance.values),
     };
 
 EnumTypeValue _$EnumTypeValueFromJson(Map<String, dynamic> json) {
