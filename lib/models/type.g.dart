@@ -186,10 +186,12 @@ ActivityType _$ActivityTypeFromJson(Map<String, dynamic> json) {
   return ActivityType(
     json['name'] as String,
     _$enumDecodeNullable(_$TypeKindEnumMap, json['kind']),
-    numericType:
-        _numericTypeFromJson(json['numericType'] as Map<String, dynamic>),
-    enumType: _enumTypeFromJson(json['enumType'] as Map<String, dynamic>),
-    rangeType: _rangeTypeFromJson(json['rangeType'] as Map<String, dynamic>),
+    numericType: ActivityType._numericTypeFromJson(
+        json['numericType'] as Map<String, dynamic>),
+    enumType: ActivityType._enumTypeFromJson(
+        json['enumType'] as Map<String, dynamic>),
+    rangeType: ActivityType._rangeTypeFromJson(
+        json['rangeType'] as Map<String, dynamic>),
   );
 }
 
@@ -197,9 +199,9 @@ Map<String, dynamic> _$ActivityTypeToJson(ActivityType instance) =>
     <String, dynamic>{
       'name': instance.name,
       'kind': _$TypeKindEnumMap[instance.kind],
-      'numericType': _numericTypeToJson(instance.numericType),
-      'enumType': _enumTypeToJson(instance.enumType),
-      'rangeType': _rangeTypeToJson(instance.rangeType),
+      'numericType': ActivityType._numericTypeToJson(instance.numericType),
+      'enumType': ActivityType._enumTypeToJson(instance.enumType),
+      'rangeType': ActivityType._rangeTypeToJson(instance.rangeType),
     };
 
 T _$enumDecode<T>(
@@ -253,12 +255,13 @@ Map<String, dynamic> _$NumericTypeToJson(NumericType instance) =>
 
 EnumType _$EnumTypeFromJson(Map<String, dynamic> json) {
   return EnumType(
-    _enumTypeValueFromJson(json['values'] as List<Map<String, dynamic>>),
+    EnumType._enumTypeValueFromJson(
+        json['values'] as List<Map<String, dynamic>>),
   );
 }
 
 Map<String, dynamic> _$EnumTypeToJson(EnumType instance) => <String, dynamic>{
-      'values': _enumTypeValueToJson(instance.values),
+      'values': EnumType._enumTypeValueToJson(instance.values),
     };
 
 EnumTypeValue _$EnumTypeValueFromJson(Map<String, dynamic> json) {

@@ -39,12 +39,12 @@ class EntryAdapter extends TypeAdapter<Entry> {
 
 Entry _$EntryFromJson(Map<String, dynamic> json) {
   return Entry(
-    _dateTimeFromJson(json['timestamp'] as int),
+    Entry._dateTimeFromJson(json['timestamp'] as int),
     (json['value'] as num)?.toDouble(),
   );
 }
 
 Map<String, dynamic> _$EntryToJson(Entry instance) => <String, dynamic>{
-      'timestamp': _dateTimeToJson(instance.timestamp),
+      'timestamp': Entry._dateTimeToJson(instance.timestamp),
       'value': instance.value,
     };

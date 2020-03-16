@@ -25,10 +25,6 @@ part 'entry.g.dart';
 
 const String entryBox = 'entries';
 
-int _dateTimeToJson(DateTime dateTime) => dateTime.millisecondsSinceEpoch;
-
-DateTime _dateTimeFromJson(int unixTime) => DateTime.fromMillisecondsSinceEpoch(unixTime);
-
 @JsonSerializable()
 @HiveType(typeId: 12)
 class Entry extends HiveObject {
@@ -74,6 +70,10 @@ class Entry extends HiveObject {
 
   @override
   int get hashCode => timestamp.hashCode ^ value.hashCode;
+
+  static int _dateTimeToJson(DateTime dateTime) => dateTime.millisecondsSinceEpoch;
+
+  static DateTime _dateTimeFromJson(int unixTime) => DateTime.fromMillisecondsSinceEpoch(unixTime);
 }
 
 class GroupedEntry {

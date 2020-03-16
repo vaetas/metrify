@@ -55,8 +55,8 @@ Activity _$ActivityFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : Category.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-    _typeFromJson(json['type'] as Map<String, dynamic>),
-    _entriesFromJson(json['entries'] as List<Map<String, dynamic>>),
+    Activity._typeFromJson(json['type'] as Map<String, dynamic>),
+    Activity._entriesFromJson(json['entries'] as List<Map<String, dynamic>>),
     grouping: _$enumDecodeNullable(_$EntryGroupingEnumMap, json['grouping']),
   );
 }
@@ -64,8 +64,8 @@ Activity _$ActivityFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$ActivityToJson(Activity instance) => <String, dynamic>{
       'name': instance.name,
       'categories': instance.categories,
-      'entries': _entriesToJson(instance.entries),
-      'type': _typeToJson(instance.type),
+      'entries': Activity._entriesToJson(instance.entries),
+      'type': Activity._typeToJson(instance.type),
       'grouping': _$EntryGroupingEnumMap[instance.grouping],
     };
 

@@ -28,14 +28,6 @@ part 'activity.g.dart';
 
 const String activityBox = 'activities';
 
-List<Map<String, dynamic>> _entriesToJson(List<Entry> entries) => entries.map((e) => e.toJson()).toList();
-
-List<Entry> _entriesFromJson(List<Map<String, dynamic>> json) => json.map((e) => Entry.fromJson(e)).toList();
-
-Map<String, dynamic> _typeToJson(ActivityType type) => type.toJson();
-
-ActivityType _typeFromJson(Map<String, dynamic> json) => ActivityType.fromJson(json);
-
 @JsonSerializable()
 @HiveType(typeId: 10)
 class Activity extends HiveObject {
@@ -98,4 +90,12 @@ class Activity extends HiveObject {
 
   @override
   int get hashCode => name.hashCode ^ categories.hashCode ^ entries.hashCode ^ type.hashCode ^ _color.hashCode;
+
+  static List<Map<String, dynamic>> _entriesToJson(List<Entry> entries) => entries.map((e) => e.toJson()).toList();
+
+  static List<Entry> _entriesFromJson(List<Map<String, dynamic>> json) => json.map((e) => Entry.fromJson(e)).toList();
+
+  static Map<String, dynamic> _typeToJson(ActivityType type) => type.toJson();
+
+  static ActivityType _typeFromJson(Map<String, dynamic> json) => ActivityType.fromJson(json);
 }

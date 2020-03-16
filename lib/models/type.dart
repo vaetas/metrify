@@ -41,18 +41,6 @@ Map<TypeKind, String> typeKindName = {
   TypeKind.range: 'Range',
 };
 
-Map<String, dynamic> _numericTypeToJson(NumericType type) => type?.toJson();
-
-Map<String, dynamic> _enumTypeToJson(EnumType type) => type?.toJson();
-
-Map<String, dynamic> _rangeTypeToJson(RangeType type) => type?.toJson();
-
-NumericType _numericTypeFromJson(Map<String, dynamic> json) => NumericType.fromJson(json);
-
-EnumType _enumTypeFromJson(Map<String, dynamic> json) => EnumType.fromJson(json);
-
-RangeType _rangeTypeFromJson(Map<String, dynamic> json) => RangeType.fromJson(json);
-
 @JsonSerializable()
 @HiveType(typeId: 24)
 class ActivityType extends HiveObject {
@@ -87,9 +75,7 @@ class ActivityType extends HiveObject {
   Map<String, dynamic> toJson() => _$ActivityTypeToJson(this);
 
   @override
-  String toString() {
-    return 'ActivityType{name: $name, kind: $kind, ${numericType ?? (enumType ?? rangeType)}}';
-  }
+  String toString() => 'ActivityType{name: $name, kind: $kind, ${numericType ?? (enumType ?? rangeType)}}';
 
   @override
   bool operator ==(Object other) =>
@@ -104,6 +90,18 @@ class ActivityType extends HiveObject {
 
   @override
   int get hashCode => name.hashCode ^ kind.hashCode ^ numericType.hashCode ^ enumType.hashCode ^ rangeType.hashCode;
+
+  static Map<String, dynamic> _numericTypeToJson(NumericType type) => type?.toJson();
+
+  static Map<String, dynamic> _enumTypeToJson(EnumType type) => type?.toJson();
+
+  static Map<String, dynamic> _rangeTypeToJson(RangeType type) => type?.toJson();
+
+  static NumericType _numericTypeFromJson(Map<String, dynamic> json) => NumericType.fromJson(json);
+
+  static EnumType _enumTypeFromJson(Map<String, dynamic> json) => EnumType.fromJson(json);
+
+  static RangeType _rangeTypeFromJson(Map<String, dynamic> json) => RangeType.fromJson(json);
 }
 
 @JsonSerializable()
@@ -129,11 +127,6 @@ class NumericType extends HiveObject {
   int get hashCode => unit.hashCode;
 }
 
-List<Map<String, dynamic>> _enumTypeValueToJson(List<EnumTypeValue> values) => values.map((v) => v.toJson()).toList();
-
-List<EnumTypeValue> _enumTypeValueFromJson(List<Map<String, dynamic>> json) =>
-    json.map((v) => EnumTypeValue.fromJson(v)).toList();
-
 @JsonSerializable()
 @HiveType(typeId: 26)
 class EnumType extends HiveObject {
@@ -156,6 +149,12 @@ class EnumType extends HiveObject {
 
   @override
   int get hashCode => values.hashCode;
+
+  static List<Map<String, dynamic>> _enumTypeValueToJson(List<EnumTypeValue> values) =>
+      values.map((v) => v.toJson()).toList();
+
+  static List<EnumTypeValue> _enumTypeValueFromJson(List<Map<String, dynamic>> json) =>
+      json.map((v) => EnumTypeValue.fromJson(v)).toList();
 }
 
 @JsonSerializable()
