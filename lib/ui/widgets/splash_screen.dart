@@ -17,14 +17,16 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:metrify/resources/theme.dart';
 
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: Container(),
-      ),
+      themeMode: ThemeMode.system,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      home: Scaffold(),
     );
   }
 }
