@@ -26,28 +26,73 @@ import 'package:metrify/ui/activity/activity_screen.dart';
 import 'package:metrify/ui/entry/add_entry_screen.dart';
 
 class HomeScreen extends StatelessWidget {
+  final _activityBox = Hive.box<Activity>(activityBox);
+
+  Widget _buildList(List<Activity> activities) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          final activity = activities[index];
+
+          return ActivityCard(
+            activity: activity,
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return ActivityScreen(activity: activity);
+                },
+              ));
+            },
+          );
+        },
+        childCount: activities.length,
+      ),
+    );
+  }
+
+  _buildCreateFirstActivity(BuildContext context) {
+    return SliverFillRemaining(
+      child: Center(
+        child: FlatButton.icon(
+          icon: Icon(
+            Icons.add,
+            size: 18,
+          ),
+          label: Text('Create first activity'),
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.activityCreate);
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFloatingActionButton(BuildContext context) {
+    return FloatingActionButton.extended(
+      onPressed: () async {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return AddEntryScreen();
+            },
+            fullscreenDialog: true,
+          ),
+        );
+      },
+      label: Text('New entry'),
+      icon: Icon(Icons.add),
+      heroTag: 'AddEntryFab',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return AddEntryScreen();
-              },
-              fullscreenDialog: true,
-            ),
-          );
-        },
-        label: Text('New entry'),
-        icon: Icon(Icons.add),
-        heroTag: 'AddEntryFab',
-      ),
+      floatingActionButton: _activityBox.isNotEmpty ? _buildFloatingActionButton(context) : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: ValueListenableBuilder<Box<Activity>>(
-        valueListenable: Hive.box<Activity>(activityBox).listenable(),
+        valueListenable: _activityBox.listenable(),
         builder: (BuildContext context, Box<Activity> value, Widget _) {
           final activities = value.values.toList();
 
@@ -65,40 +110,7 @@ class HomeScreen extends StatelessWidget {
                   )
                 ],
               ),
-              activities.length > 0
-                  ? SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final activity = activities[index];
-
-                          return ActivityCard(
-                            activity: activity,
-                            onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) {
-                                  return ActivityScreen(activity: activity);
-                                },
-                              ));
-                            },
-                          );
-                        },
-                        childCount: activities.length,
-                      ),
-                    )
-                  : SliverFillRemaining(
-                      child: Center(
-                        child: FlatButton.icon(
-                          icon: Icon(
-                            Icons.add,
-                            size: 18,
-                          ),
-                          label: Text('Create first activity'),
-                          onPressed: () {
-                            Navigator.pushNamed(context, Routes.activityCreate);
-                          },
-                        ),
-                      ),
-                    ),
+              activities.isEmpty ? _buildCreateFirstActivity(context) : _buildList(activities)
             ],
           );
         },
