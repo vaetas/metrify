@@ -206,7 +206,7 @@ class _GroupHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
         border: Border(
@@ -218,7 +218,10 @@ class _GroupHeader extends StatelessWidget {
       ),
       child: Text(
         title,
-        style: TextStyle(fontWeight: FontWeight.w600),
+        style: TextStyle(
+          fontWeight: FontWeight.w600,
+          color: Theme.of(context).textTheme.body1.color.withOpacity(0.5),
+        ),
       ),
     );
   }
