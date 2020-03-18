@@ -103,10 +103,7 @@ class _CreateEnumTypeScreenState extends State<CreateEnumTypeScreen> {
               child: TextField(
                 textCapitalization: TextCapitalization.sentences,
                 controller: _typeNameController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Name',
-                ),
+                decoration: InputDecoration(labelText: 'Name'),
               ),
             ),
             Expanded(
@@ -146,10 +143,9 @@ class _CreateEnumTypeScreenState extends State<CreateEnumTypeScreen> {
                         // TODO: Keep keyboard opened.
                       },
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Add value',
+                        hintText: 'Value',
                         contentPadding: EdgeInsets.symmetric(
-                          vertical: 0,
+                          vertical: 5,
                           horizontal: 10,
                         ),
                       ),
