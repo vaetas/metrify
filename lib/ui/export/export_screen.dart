@@ -22,8 +22,10 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrify/models/activity.dart';
+import 'package:metrify/models/export.dart';
 import 'package:metrify/ui/widgets/appbar_submit_button.dart';
 import 'package:metrify/utils/export.dart';
+import 'package:package_info/package_info.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 const _storagePermission = PermissionGroup.storage;
@@ -35,8 +37,6 @@ class ExportScreen extends StatefulWidget {
 
 class _ExportScreenState extends State<ExportScreen> {
   final _activityBox = Hive.box<Activity>(activityBox);
-  Activity _activity;
-  Set<Activity> _selectedActivities = {};
 
   bool _storagePermissionGranted = false;
 
@@ -59,9 +59,14 @@ class _ExportScreenState extends State<ExportScreen> {
                 label: 'Export',
                 onPressed: _canSubmit()
                     ? () async {
-                        await exportFile(
-                          box.values.map((a) => a.toJson()).toList().toString(),
+                        final packageInfo = await PackageInfo.fromPlatform();
+                        final exportData = ExportData(
+                          DateTime.now(),
+                          packageInfo.version,
+                          activities: box.values.toList(),
                         );
+
+                        await exportFile(exportData.toJson().toString());
 
                         Scaffold.of(context).showSnackBar(SnackBar(
                           content: Text('Export successful!'),
