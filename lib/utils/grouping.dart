@@ -20,6 +20,18 @@ import 'package:intl/intl.dart';
 import 'package:metrify/models/entry.dart';
 import 'package:metrify/models/group.dart';
 
+extension DateUtil on DateTime {
+  // TODO: For some locales sunday is start of the week.
+
+  DateTime getLastMonday() {
+    return DateTime(this.year, this.month, this.day).subtract(
+      Duration(days: (DateTime.monday - this.weekday).abs()),
+    );
+  }
+
+  DateTime getNextSunday() => this.getLastMonday().add(Duration(days: 6));
+}
+
 List<GroupedEntry> groupEntries(List<Entry> entries, EntryGrouping type) {
   Map<DateTime, GroupedEntry> groups = {};
 
@@ -44,7 +56,7 @@ List<GroupedEntry> groupEntries(List<Entry> entries, EntryGrouping type) {
         );
         break;
       case EntryGrouping.week:
-        groupDate = _getLastMonday(timestamp);
+        groupDate = timestamp.getLastMonday();
         break;
       case EntryGrouping.month:
         groupDate = DateTime(timestamp.year, timestamp.month);
@@ -77,9 +89,8 @@ String formatGroupDate(DateTime timestamp, EntryGrouping type) {
     case EntryGrouping.day:
       return DateFormat('MMMM d').format(timestamp);
     case EntryGrouping.week:
-      final lastMonday = _getLastMonday(timestamp);
-      final start = DateFormat('MMM d').format(lastMonday);
-      final end = DateFormat('MMM d').format(lastMonday.add(Duration(days: 6)));
+      final start = DateFormat('MMM d').format(timestamp.getLastMonday());
+      final end = DateFormat('MMM d').format(timestamp.getNextSunday());
       return '$start — $end';
     case EntryGrouping.month:
       return DateFormat('MMMM').format(timestamp);
@@ -90,12 +101,4 @@ String formatGroupDate(DateTime timestamp, EntryGrouping type) {
   }
 
   return '';
-}
-
-DateTime _getLastMonday(DateTime timestamp) {
-  DateTime date = DateTime(timestamp.year, timestamp.month, timestamp.day).subtract(
-    Duration(days: (DateTime.monday - timestamp.weekday).abs()),
-  );
-
-  return date;
 }
