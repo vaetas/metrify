@@ -120,6 +120,7 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
                               suffixText: numericType.unit,
                               hintText: 'Value',
                             ),
+                            autofocus: true,
                           ),
                         );
                         break;
