@@ -139,8 +139,6 @@ class _CreateEnumTypeScreenState extends State<CreateEnumTypeScreen> {
                           _enumValues.add(value);
                           _addValueController.text = '';
                         });
-
-                        // TODO: Keep keyboard opened.
                       },
                       decoration: InputDecoration(
                         hintText: 'Value',
@@ -149,6 +147,7 @@ class _CreateEnumTypeScreenState extends State<CreateEnumTypeScreen> {
                           horizontal: 10,
                         ),
                       ),
+                      autofocus: _typeNameController.text.trim().isNotEmpty,
                     ),
                   ),
                   IconButton(
