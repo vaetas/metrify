@@ -31,6 +31,8 @@ import 'package:permission_handler/permission_handler.dart';
 const _storagePermission = PermissionGroup.storage;
 
 class ExportScreen extends StatefulWidget {
+  static const routeName = '/export';
+
   @override
   _ExportScreenState createState() => _ExportScreenState();
 }
@@ -89,7 +91,8 @@ class _ExportScreenState extends State<ExportScreen> {
                 children: <Widget>[
                   Container(
                     margin: const EdgeInsets.only(bottom: 15, top: 20),
-                    child: Text('Exported file will be saved into following directory. If the file already exists, it '
+                    child: Text(
+                        'Exported file will be saved into following directory. If the file already exists, it '
                         'will be overwritten.'),
                   ),
                   Container(
@@ -137,7 +140,9 @@ class _ExportScreenState extends State<ExportScreen> {
     return ValueListenableBuilder<Box<Activity>>(
       valueListenable: _activityBox.listenable(),
       builder: (context, box, _) {
-        return _storagePermissionGranted ? _buildGranted(box) : _buildNotGranted();
+        return _storagePermissionGranted
+            ? _buildGranted(box)
+            : _buildNotGranted();
       },
     );
   }
@@ -154,7 +159,8 @@ class _ExportScreenState extends State<ExportScreen> {
   }
 
   Future _checkStoragePermissionStatus() async {
-    final permissionStatus = await PermissionHandler().checkPermissionStatus(_storagePermission);
+    final permissionStatus =
+        await PermissionHandler().checkPermissionStatus(_storagePermission);
     print(permissionStatus);
 
     if (permissionStatus == PermissionStatus.granted) {

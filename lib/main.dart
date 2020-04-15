@@ -24,7 +24,7 @@ import 'package:metrify/models/category.dart';
 import 'package:metrify/models/entry.dart';
 import 'package:metrify/models/group.dart';
 import 'package:metrify/models/type.dart';
-import 'package:metrify/resources/routes.dart';
+import 'package:metrify/resources/config.dart';
 import 'package:metrify/resources/theme.dart';
 import 'package:metrify/ui/activity/activity_list_screen.dart';
 import 'package:metrify/ui/activity/create_activity_screen.dart';
@@ -34,9 +34,11 @@ import 'package:metrify/ui/export/export_screen.dart';
 import 'package:metrify/ui/home/home_screen.dart';
 import 'package:metrify/ui/root.dart';
 import 'package:metrify/ui/settings/settings_screen.dart';
+import 'package:metrify/ui/type/create_enum_type_screen.dart';
+import 'package:metrify/ui/type/create_numeric_type_screen.dart';
+import 'package:metrify/ui/type/create_range_type_screen.dart';
 import 'package:metrify/ui/type/type_list_screen.dart';
 import 'package:metrify/ui/widgets/splash_screen.dart';
-import 'package:metrify/resources/config.dart';
 import 'package:metrify/utils/generate.dart';
 
 void main() async {
@@ -51,22 +53,47 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Metrify',
-      initialRoute: Routes.root,
+      initialRoute: Root.routeName,
       routes: {
-        Routes.root: (_) => Root(),
-        Routes.home: (_) => HomeScreen(),
-        Routes.settings: (_) => SettingsScreen(),
-        Routes.activityList: (_) => ActivityListScreen(),
-        Routes.activityCreate: (_) => CreateActivityScreen(),
-        Routes.typeList: (_) => TypeListScreen(),
-        Routes.categoryList: (_) => CategoryListScreen(),
-        Routes.categoryCreate: (_) => CreateCategoryScreen(),
-        Routes.export: (_) => ExportScreen(),
+        Root.routeName: (_) => Root(),
+        HomeScreen.routeName: (_) => HomeScreen(),
+        SettingsScreen.routeName: (_) => SettingsScreen(),
+        ActivityListScreen.routeName: (_) => ActivityListScreen(),
+        CreateActivityScreen.routeName: (_) => CreateActivityScreen(),
+        TypeListScreen.routeName: (_) => TypeListScreen(),
+        CategoryListScreen.routeName: (_) => CategoryListScreen(),
+        CreateCategoryScreen.routeName: (_) => CreateCategoryScreen(),
+        ExportScreen.routeName: (_) => ExportScreen(),
       },
       themeMode: ThemeMode.system,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
+      onGenerateRoute: (settings) {
+        MaterialPageRoute getDialogRoute(Widget screen) {
+          return MaterialPageRoute(
+            fullscreenDialog: true,
+            builder: (context) {
+              return screen;
+            },
+          );
+        }
+
+        switch (settings.name) {
+          case CreateNumericTypeScreen.routeName:
+            return getDialogRoute(CreateNumericTypeScreen());
+          case CreateEnumTypeScreen.routeName:
+            return getDialogRoute(CreateEnumTypeScreen());
+          case CreateRangeTypeScreen.routeName:
+            return getDialogRoute(CreateRangeTypeScreen());
+          default:
+            return MaterialPageRoute(
+              builder: (context) {
+                return HomeScreen();
+              },
+            );
+        }
+      },
     );
   }
 }

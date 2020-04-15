@@ -22,9 +22,11 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrify/models/category.dart';
-import 'package:metrify/resources/routes.dart';
+import 'package:metrify/ui/category/create_category_screen.dart';
 
 class CategoryListScreen extends StatefulWidget {
+  static const routeName = '/category/list';
+
   @override
   _CategoryListScreenState createState() => _CategoryListScreenState();
 }
@@ -48,7 +50,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.pushNamed(context, Routes.categoryCreate);
+          Navigator.pushNamed(context, CreateCategoryScreen.routeName);
         },
       ),
       body: ValueListenableBuilder<Box<Category>>(

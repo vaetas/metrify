@@ -22,6 +22,8 @@ import 'package:metrify/models/category.dart';
 import 'package:metrify/ui/widgets/appbar_submit_button.dart';
 
 class CreateCategoryScreen extends StatefulWidget {
+  static const routeName = '/category/create';
+
   @override
   _CreateCategoryScreenState createState() => _CreateCategoryScreenState();
 }

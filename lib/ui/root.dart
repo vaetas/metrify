@@ -17,19 +17,23 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrify/resources/config.dart';
 import 'package:metrify/ui/home/home_screen.dart';
 import 'package:metrify/ui/onboarding/onboarding_screen.dart';
 
 class Root extends StatelessWidget {
+  static const routeName = '/';
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<Box>(
-      valueListenable: Hive.box(configBox).listenable(keys: [ConfigKeys.passedOnboarding]),
+      valueListenable:
+          Hive.box(configBox).listenable(keys: [ConfigKeys.passedOnboarding]),
       builder: (context, value, _) {
-        bool passedOnboarding = (value.get(ConfigKeys.passedOnboarding) as bool) ?? false;
+        bool passedOnboarding =
+            (value.get(ConfigKeys.passedOnboarding) as bool) ?? false;
 
         if (passedOnboarding) {
           return HomeScreen();

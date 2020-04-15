@@ -25,6 +25,8 @@ import 'package:metrify/models/activity.dart';
 import 'package:metrify/ui/activity/create_activity_screen.dart';
 
 class ActivityListScreen extends StatefulWidget {
+  static const routeName = '/activity/list';
+
   @override
   _ActivityListScreenState createState() => _ActivityListScreenState();
 }
@@ -44,7 +46,8 @@ class _ActivityListScreenState extends State<ActivityListScreen> {
       builder: (context) {
         return AlertDialog(
           title: Text('Delete'),
-          content: Text('Do you really want to delete activity ${activity.name}? This cannot be undone.'),
+          content: Text(
+              'Do you really want to delete activity ${activity.name}? This cannot be undone.'),
           actions: <Widget>[
             FlatButton(
               child: Text('Cancel'),

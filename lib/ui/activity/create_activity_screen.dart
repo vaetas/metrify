@@ -28,6 +28,8 @@ import 'package:metrify/ui/widgets/color_picker.dart';
 import 'package:metrify/ui/widgets/dropdown_button.dart';
 
 class CreateActivityScreen extends StatefulWidget {
+  static const routeName = '/activity/create';
+
   @override
   _CreateActivityScreenState createState() => _CreateActivityScreenState();
 }
@@ -78,7 +80,8 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
     Navigator.pop(context);
   }
 
-  bool _canSubmit() => _selectedType != null && _name != null && _name.isNotEmpty;
+  bool _canSubmit() =>
+      _selectedType != null && _name != null && _name.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +104,8 @@ class _CreateActivityScreenState extends State<CreateActivityScreen> {
             ),
             ValueListenableBuilder<Box<ActivityType>>(
               valueListenable: _typeBox.listenable(),
-              builder: (BuildContext context, Box<ActivityType> value, Widget child) {
+              builder: (BuildContext context, Box<ActivityType> value,
+                  Widget child) {
                 return Container(
                   margin: const EdgeInsets.only(top: 15),
                   child: AppDropdownButton<ActivityType>(

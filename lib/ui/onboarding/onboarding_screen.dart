@@ -20,7 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hive/hive.dart';
 import 'package:metrify/resources/config.dart';
-import 'package:metrify/resources/routes.dart';
+import 'package:metrify/ui/home/home_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -107,8 +107,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         curve: Curves.fastOutSlowIn,
                       );
                     } else {
-                      await Hive.box(configBox).put(ConfigKeys.passedOnboarding, true);
-                      Navigator.pushReplacementNamed(context, Routes.home);
+                      await Hive.box(configBox).put(
+                        ConfigKeys.passedOnboarding,
+                        true,
+                      );
+                      Navigator.pushReplacementNamed(
+                        context,
+                        HomeScreen.routeName,
+                      );
                     }
                   },
                 ),
@@ -138,7 +144,8 @@ class _FeaturesView extends StatelessWidget {
         children: <Widget>[
           _InfoItem(
             icon: const Icon(FeatherIcons.code),
-            text: const Text('Define your custom data types. Numbers, enumerations, ranges.'),
+            text: const Text(
+                'Define your custom data types. Numbers, enumerations, ranges.'),
           ),
           _InfoItem(
             text: const Text(

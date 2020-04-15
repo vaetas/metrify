@@ -22,6 +22,8 @@ import 'package:metrify/models/type.dart';
 import 'package:metrify/ui/widgets/appbar_submit_button.dart';
 
 class CreateRangeTypeScreen extends StatefulWidget {
+  static const routeName = '/type/create/range';
+
   @override
   _CreateRangeTypeScreenState createState() => _CreateRangeTypeScreenState();
 }
@@ -65,7 +67,9 @@ class _CreateRangeTypeScreenState extends State<CreateRangeTypeScreen> {
   }
 
   bool _canSubmit() {
-    return _name.trim().isNotEmpty && _start.trim().isNotEmpty && _end.trim().isNotEmpty;
+    return _name.trim().isNotEmpty &&
+        _start.trim().isNotEmpty &&
+        _end.trim().isNotEmpty;
   }
 
   void _submit(BuildContext context) {

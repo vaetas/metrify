@@ -23,6 +23,8 @@ import 'package:metrify/ui/widgets/appbar_submit_button.dart';
 import 'package:toast/toast.dart';
 
 class CreateEnumTypeScreen extends StatefulWidget {
+  static const routeName = '/type/create/enum';
+
   @override
   _CreateEnumTypeScreenState createState() => _CreateEnumTypeScreenState();
 }
@@ -68,7 +70,8 @@ class _CreateEnumTypeScreenState extends State<CreateEnumTypeScreen> {
       name,
       TypeKind.enumeration,
       enumType: EnumType(
-        List.generate(_enumValues.length, (index) => EnumTypeValue(index, _enumValues[index])),
+        List.generate(_enumValues.length,
+            (index) => EnumTypeValue(index, _enumValues[index])),
       ),
     );
     box.add(type);
@@ -77,7 +80,9 @@ class _CreateEnumTypeScreenState extends State<CreateEnumTypeScreen> {
   }
 
   bool _canSubmit() =>
-      _enumValues.isNotEmpty && _typeNameController.text != null && _typeNameController.text.isNotEmpty;
+      _enumValues.isNotEmpty &&
+      _typeNameController.text != null &&
+      _typeNameController.text.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {

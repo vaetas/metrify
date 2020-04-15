@@ -21,11 +21,14 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrify/models/activity.dart';
-import 'package:metrify/resources/routes.dart';
 import 'package:metrify/ui/activity/activity_screen.dart';
+import 'package:metrify/ui/activity/create_activity_screen.dart';
 import 'package:metrify/ui/entry/add_entry_screen.dart';
+import 'package:metrify/ui/settings/settings_screen.dart';
 
 class HomeScreen extends StatelessWidget {
+  static const routeName = '/home';
+
   final _activityBox = Hive.box<Activity>(activityBox);
 
   Widget _buildList(List<Activity> activities) {
@@ -60,7 +63,7 @@ class HomeScreen extends StatelessWidget {
           ),
           label: Text('Create first activity'),
           onPressed: () {
-            Navigator.pushNamed(context, Routes.activityCreate);
+            Navigator.pushNamed(context, CreateActivityScreen.routeName);
           },
         ),
       ),
@@ -89,7 +92,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: _activityBox.isNotEmpty ? _buildFloatingActionButton(context) : null,
+      floatingActionButton:
+          _activityBox.isNotEmpty ? _buildFloatingActionButton(context) : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: ValueListenableBuilder<Box<Activity>>(
         valueListenable: _activityBox.listenable(),
@@ -105,12 +109,14 @@ class HomeScreen extends StatelessWidget {
                   IconButton(
                     icon: Icon(FeatherIcons.settings),
                     onPressed: () {
-                      Navigator.pushNamed(context, Routes.settings);
+                      Navigator.pushNamed(context, SettingsScreen.routeName);
                     },
                   )
                 ],
               ),
-              activities.isEmpty ? _buildCreateFirstActivity(context) : _buildList(activities)
+              activities.isEmpty
+                  ? _buildCreateFirstActivity(context)
+                  : _buildList(activities)
             ],
           );
         },
@@ -146,7 +152,8 @@ class ActivityCard extends StatelessWidget {
                 border: Border(
                   left: BorderSide(
                     width: 8,
-                    color: activity.color?.withOpacity(0.75) ?? Theme.of(context).cardColor,
+                    color: activity.color?.withOpacity(0.75) ??
+                        Theme.of(context).cardColor,
                   ),
                 ),
               ),
@@ -170,7 +177,11 @@ class ActivityCard extends StatelessWidget {
                         '${activity.entries.length} ${activity.entries.length == 1 ? 'entry' : 'entries'}',
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          color: Theme.of(context).textTheme.body1.color.withOpacity(0.5),
+                          color: Theme.of(context)
+                              .textTheme
+                              .body1
+                              .color
+                              .withOpacity(0.5),
                         ),
                       ),
                     ],

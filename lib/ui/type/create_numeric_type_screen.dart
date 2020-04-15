@@ -22,8 +22,11 @@ import 'package:metrify/models/type.dart';
 import 'package:metrify/ui/widgets/appbar_submit_button.dart';
 
 class CreateNumericTypeScreen extends StatefulWidget {
+  static const routeName = '/type/create/numeric';
+
   @override
-  _CreateNumericTypeScreenState createState() => _CreateNumericTypeScreenState();
+  _CreateNumericTypeScreenState createState() =>
+      _CreateNumericTypeScreenState();
 }
 
 class _CreateNumericTypeScreenState extends State<CreateNumericTypeScreen> {
@@ -64,7 +67,11 @@ class _CreateNumericTypeScreenState extends State<CreateNumericTypeScreen> {
     Navigator.pop(context);
   }
 
-  bool _canSubmit() => _name != null && _name.trim().isNotEmpty && _unit != null && _unit.trim().isNotEmpty;
+  bool _canSubmit() =>
+      _name != null &&
+      _name.trim().isNotEmpty &&
+      _unit != null &&
+      _unit.trim().isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +81,8 @@ class _CreateNumericTypeScreenState extends State<CreateNumericTypeScreen> {
         actions: <Widget>[
           Builder(
             builder: (context) {
-              return AppBarSubmitButton(onPressed: _canSubmit() ? _submit : null);
+              return AppBarSubmitButton(
+                  onPressed: _canSubmit() ? _submit : null);
             },
           )
         ],

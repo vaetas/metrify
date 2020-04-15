@@ -28,6 +28,8 @@ import 'package:metrify/ui/type/create_numeric_type_screen.dart';
 import 'package:metrify/ui/type/create_range_type_screen.dart';
 
 class TypeListScreen extends StatefulWidget {
+  static const routeName = '/type/list';
+
   @override
   _TypeListScreenState createState() => _TypeListScreenState();
 }
@@ -54,16 +56,8 @@ class _TypeListScreenState extends State<TypeListScreen> {
             label: 'Number',
             labelWidget: SpeedDialLabel(label: 'Number'),
             backgroundColor: Theme.of(context).primaryColor,
-            onTap: () async {
-              await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return CreateNumericTypeScreen();
-                    },
-                    fullscreenDialog: true,
-                  ));
-              setState(() {});
+            onTap: () {
+              Navigator.pushNamed(context, CreateNumericTypeScreen.routeName);
             },
           ),
           SpeedDialChild(
@@ -71,16 +65,8 @@ class _TypeListScreenState extends State<TypeListScreen> {
             label: 'Enumeration',
             labelWidget: SpeedDialLabel(label: 'Enumeration'),
             backgroundColor: Theme.of(context).primaryColor,
-            onTap: () async {
-              await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return CreateEnumTypeScreen();
-                    },
-                    fullscreenDialog: true,
-                  ));
-              setState(() {});
+            onTap: () {
+              Navigator.pushNamed(context, CreateEnumTypeScreen.routeName);
             },
           ),
           SpeedDialChild(
@@ -88,16 +74,8 @@ class _TypeListScreenState extends State<TypeListScreen> {
             label: 'Range',
             labelWidget: SpeedDialLabel(label: 'Range'),
             backgroundColor: Theme.of(context).primaryColor,
-            onTap: () async {
-              await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return CreateRangeTypeScreen();
-                    },
-                    fullscreenDialog: true,
-                  ));
-              setState(() {});
+            onTap: () {
+              Navigator.pushNamed(context, CreateRangeTypeScreen.routeName);
             },
           ),
         ],

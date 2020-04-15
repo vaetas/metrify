@@ -18,11 +18,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:metrify/resources/routes.dart';
+import 'package:metrify/ui/activity/activity_list_screen.dart';
+import 'package:metrify/ui/category/category_list.dart';
+import 'package:metrify/ui/export/export_screen.dart';
+import 'package:metrify/ui/type/type_list_screen.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatelessWidget {
+  static const routeName = '/settings';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,21 +42,21 @@ class SettingsScreen extends StatelessWidget {
                 title: Text('Activities'),
                 leading: Icon(FeatherIcons.activity),
                 onTap: () {
-                  Navigator.pushNamed(context, Routes.activityList);
+                  Navigator.pushNamed(context, ActivityListScreen.routeName);
                 },
               ),
               ListTile(
                 title: Text('Types'),
                 leading: Icon(FeatherIcons.code),
                 onTap: () {
-                  Navigator.pushNamed(context, Routes.typeList);
+                  Navigator.pushNamed(context, TypeListScreen.routeName);
                 },
               ),
               ListTile(
                 title: Text('Categories'),
                 leading: Icon(FeatherIcons.tag),
                 onTap: () {
-                  Navigator.pushNamed(context, Routes.categoryList);
+                  Navigator.pushNamed(context, CategoryListScreen.routeName);
                 },
               ),
               Divider(),
@@ -59,7 +64,7 @@ class SettingsScreen extends StatelessWidget {
                 title: Text('Export'),
                 leading: Icon(FeatherIcons.arrowDown, size: 28),
                 onTap: () {
-                  Navigator.pushNamed(context, Routes.export);
+                  Navigator.pushNamed(context, ExportScreen.routeName);
                 },
               ),
               Divider(),
@@ -68,7 +73,8 @@ class SettingsScreen extends StatelessWidget {
                 builder: (context, snapshot) {
                   return ListTile(
                     title: Text('About'),
-                    subtitle: Text(snapshot.hasData ? 'v' + snapshot.data.version : ''),
+                    subtitle: Text(
+                        snapshot.hasData ? 'v' + snapshot.data.version : ''),
                     leading: Icon(FeatherIcons.helpCircle),
                     onTap: () async {
                       final url = r'https://github.com/vaetas/metrify';
