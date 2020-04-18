@@ -17,14 +17,35 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrify/resources/config.dart';
+import 'package:metrify/resources/theme.dart';
 import 'package:metrify/ui/home/home_screen.dart';
 import 'package:metrify/ui/onboarding/onboarding_screen.dart';
+import 'package:metrify/ui/settings/settings_screen.dart';
+import 'package:metrify/ui/view/view_screen.dart';
 
-class Root extends StatelessWidget {
+class Root extends StatefulWidget {
   static const routeName = '/';
+
+  final int screen;
+
+  Root({Key key, this.screen = 0}) : super(key: key);
+
+  @override
+  _RootState createState() => _RootState();
+}
+
+class _RootState extends State<Root> {
+  int currentScreenIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    currentScreenIndex = widget.screen;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +57,57 @@ class Root extends StatelessWidget {
             (value.get(ConfigKeys.passedOnboarding) as bool) ?? false;
 
         if (passedOnboarding) {
-          return HomeScreen();
+          return Scaffold(
+            body: IndexedStack(
+              index: currentScreenIndex,
+              children: <Widget>[
+                HomeScreen(),
+                ViewScreen(),
+                SettingsScreen(),
+              ],
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: currentScreenIndex,
+              onTap: (index) {
+                setState(() {
+                  currentScreenIndex = index;
+                });
+              },
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              unselectedLabelStyle: TextStyle(
+                fontSize: 14,
+              ),
+              selectedItemColor: Theme.of(context).primaryColor,
+              selectedLabelStyle: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+              ),
+              elevation: 0,
+              items: [
+                BottomNavigationBarItem(
+                  title: Text('Home'),
+                  icon: Icon(
+                    FeatherIcons.home,
+                    size: AppTheme.bottomBarIconSize,
+                  ),
+                ),
+                BottomNavigationBarItem(
+                  title: Text('Views'),
+                  icon: Icon(
+                    FeatherIcons.trendingUp,
+                    size: AppTheme.bottomBarIconSize,
+                  ),
+                ),
+                BottomNavigationBarItem(
+                  title: Text('Settings'),
+                  icon: Icon(
+                    FeatherIcons.settings,
+                    size: AppTheme.bottomBarIconSize,
+                  ),
+                ),
+              ],
+            ),
+          );
         } else {
           return OnboardingScreen();
         }

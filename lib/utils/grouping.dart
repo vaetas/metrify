@@ -17,69 +17,88 @@
  */
 
 import 'package:intl/intl.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:metrify/models/entry.dart';
 import 'package:metrify/models/group.dart';
 
 extension DateUtil on DateTime {
   // TODO: For some locales sunday is start of the week.
 
-  DateTime getLastMonday() {
+  DateTime getWeekStart() {
     return DateTime(this.year, this.month, this.day).subtract(
       Duration(days: (DateTime.monday - this.weekday).abs()),
     );
   }
 
-  DateTime getNextSunday() => this.getLastMonday().add(Duration(days: 6));
+  DateTime getWeekEnd() => this.getWeekStart().add(Duration(days: 6));
+
+  DateTime getWithResolution(EntryGrouping grouping) {
+    switch (grouping) {
+      case EntryGrouping.hour:
+        return DateTime(
+          this.year,
+          this.month,
+          this.day,
+          this.hour,
+        );
+      case EntryGrouping.day:
+        return DateTime(
+          this.year,
+          this.month,
+          this.day,
+        );
+      case EntryGrouping.week:
+        return this.getWeekStart();
+      case EntryGrouping.month:
+        return DateTime(
+          this.year,
+          this.month,
+        );
+      case EntryGrouping.year:
+        return DateTime(this.year);
+      default:
+        return this;
+    }
+  }
+
+  DateTime getPreviousGroup(EntryGrouping grouping, {int n = 1}) {
+    final _this = Jiffy(this);
+
+    switch (grouping) {
+      case EntryGrouping.hour:
+        return _this.subtract(hours: n);
+      case EntryGrouping.day:
+        return _this.subtract(days: n);
+      case EntryGrouping.week:
+        return _this.subtract(weeks: n);
+      case EntryGrouping.month:
+        return _this.subtract(months: n);
+      case EntryGrouping.year:
+        return _this.subtract(years: n);
+      default:
+        return this;
+    }
+  }
 }
 
-List<GroupedEntry> groupEntries(List<Entry> entries, EntryGrouping type) {
+Map<DateTime, GroupedEntry> groupEntries(
+  List<Entry> entries,
+  EntryGrouping type,
+) {
   Map<DateTime, GroupedEntry> groups = {};
 
   for (Entry entry in entries) {
-    DateTime groupDate;
     DateTime timestamp = entry.timestamp;
+    DateTime groupDate = timestamp.getWithResolution(type);
 
-    switch (type) {
-      case EntryGrouping.hour:
-        groupDate = DateTime(
-          timestamp.year,
-          timestamp.month,
-          timestamp.day,
-          timestamp.hour,
-        );
-        break;
-      case EntryGrouping.day:
-        groupDate = DateTime(
-          timestamp.year,
-          timestamp.month,
-          timestamp.day,
-        );
-        break;
-      case EntryGrouping.week:
-        groupDate = timestamp.getLastMonday();
-        break;
-      case EntryGrouping.month:
-        groupDate = DateTime(timestamp.year, timestamp.month);
-        break;
-      case EntryGrouping.year:
-        groupDate = DateTime(timestamp.year);
-        break;
-      case EntryGrouping.minute:
-        groupDate = DateTime(
-          timestamp.year,
-          timestamp.month,
-          timestamp.day,
-          timestamp.hour,
-          timestamp.minute,
-        );
-        break;
-    }
-
-    groups.putIfAbsent(groupDate, () => GroupedEntry(timestamp: groupDate, type: type, entries: []));
+    groups.putIfAbsent(
+      groupDate,
+      () => GroupedEntry(timestamp: groupDate, type: type, entries: []),
+    );
     groups[groupDate].entries.add(entry);
   }
 
-  return groups.values.toList();
+  return groups;
 }
 
 String formatGroupDate(DateTime timestamp, EntryGrouping type) {
@@ -89,16 +108,15 @@ String formatGroupDate(DateTime timestamp, EntryGrouping type) {
     case EntryGrouping.day:
       return DateFormat('MMMM d').format(timestamp);
     case EntryGrouping.week:
-      final start = DateFormat('MMM d').format(timestamp.getLastMonday());
-      final end = DateFormat('MMM d').format(timestamp.getNextSunday());
+      final start = DateFormat('MMM d').format(timestamp.getWeekStart());
+      final end = DateFormat('MMM d').format(timestamp.getWeekEnd());
       return '$start — $end';
     case EntryGrouping.month:
       return DateFormat('MMMM').format(timestamp);
     case EntryGrouping.year:
       return DateFormat('y').format(timestamp);
-    case EntryGrouping.minute:
-      return DateFormat('HH:mm, MMMM d').format(timestamp);
+    case EntryGrouping.none:
+    default:
+      return timestamp.toIso8601String();
   }
-
-  return '';
 }

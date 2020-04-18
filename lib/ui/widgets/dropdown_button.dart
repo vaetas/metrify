@@ -48,8 +48,8 @@ class AppDropdownButton<T> extends StatelessWidget {
       alignedDropdown: true,
       child: ClipRRect(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(4),
-          topRight: Radius.circular(4),
+          topLeft: Radius.circular(0),
+          topRight: Radius.circular(0),
         ),
         child: Container(
           decoration: BoxDecoration(

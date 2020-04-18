@@ -22,10 +22,6 @@ If you edit models you will need to run `build_runner` again to generate files:
 flutter packages pub run build_runner build
 ```
 
-### Codestyle
-
-Use 120 characters per line for formatting.
-
 ## Milestones
 
 - [ ] Add charts and custom views.

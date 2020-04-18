@@ -30,22 +30,28 @@ class AppTheme {
 
   static const Color backgroundColor = Colors.white;
 
-  static const PageTransitionsTheme _pageTransitionTheme = PageTransitionsTheme(builders: {
+  static const double bottomBarIconSize = 20;
+
+  static const PageTransitionsTheme _pageTransitionTheme =
+      PageTransitionsTheme(builders: {
     TargetPlatform.android: ZoomPageTransitionsBuilder(),
   });
 
-  static const _dividerTheme = DividerThemeData(
+  static final _dividerTheme = DividerThemeData(
     thickness: 1,
     indent: 0,
     space: 4,
+    color: black.withOpacity(0.2),
   );
+
+  static const Color black = Color(0xFF14151E);
 
   static get lightTheme => ThemeData(
         brightness: Brightness.light,
         fontFamily: fontFamily,
         accentColor: Colors.teal,
-        primaryColor: Colors.teal,
-        cardColor: Colors.black12.withOpacity(0.08),
+        primaryColor: Color(0xFF14151D),
+        cardColor: Color(0xffe2e3ec),
         textTheme: TextTheme(
           title: TextStyle(
             fontWeight: FontWeight.bold,
@@ -82,21 +88,25 @@ class AppTheme {
         ),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           foregroundColor: Colors.white,
-          backgroundColor: Colors.teal,
+          backgroundColor: Color(0xFF14151E),
         ),
         dividerTheme: _dividerTheme,
-        dividerColor: Colors.black12,
+        dividerColor: black.withOpacity(0.0),
         buttonTheme: ButtonThemeData(
           buttonColor: Colors.teal,
           textTheme: ButtonTextTheme.primary,
         ),
         inputDecorationTheme: InputDecorationTheme(
-          fillColor: Colors.black12.withOpacity(0.08),
+          fillColor: Color(0xffe2e3ec),
           filled: true,
           enabledBorder: UnderlineInputBorder(
+            borderRadius: BorderRadius.circular(0),
             borderSide: BorderSide(
               color: Colors.black.withOpacity(0.70),
             ),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderRadius: BorderRadius.circular(0),
           ),
         ),
       );
@@ -104,11 +114,15 @@ class AppTheme {
   static get darkTheme => ThemeData(
         brightness: Brightness.dark,
         fontFamily: fontFamily,
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: Color(0xFF14151E),
         accentColor: Colors.tealAccent,
         cardColor: Colors.grey.withOpacity(0.5),
         primaryColor: Colors.white,
         pageTransitionsTheme: _pageTransitionTheme,
+        buttonTheme: ButtonThemeData(
+          buttonColor: Color(0xFFFEFFFE),
+          textTheme: ButtonTextTheme.primary,
+        ),
         textTheme: TextTheme(
           title: TextStyle(
             fontWeight: FontWeight.w700,
@@ -124,9 +138,12 @@ class AppTheme {
             fontWeight: FontWeight.w700,
             fontSize: 20,
           ),
+          button: TextStyle(
+            color: Colors.black,
+          ),
         ),
         appBarTheme: AppBarTheme(
-          color: Colors.black,
+          color: Color(0xFF14151E),
           brightness: Brightness.dark,
           elevation: 0,
           iconTheme: IconThemeData(
@@ -143,19 +160,30 @@ class AppTheme {
         ),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           foregroundColor: Colors.black,
-          backgroundColor: Colors.tealAccent,
+          backgroundColor: Color(0xFFFEFFFE),
         ),
         dividerTheme: _dividerTheme.copyWith(
           color: Colors.white.withOpacity(0.2),
         ),
         inputDecorationTheme: InputDecorationTheme(
-          fillColor: Colors.grey.withOpacity(0.5),
+          fillColor: Colors.white.withOpacity(0.2),
+          focusColor: Colors.red,
+          hoverColor: Colors.red,
           filled: true,
           enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white.withOpacity(0.5),
+//            borderSide: BorderSide(
+//              color: Colors.white.withOpacity(0.5),
+//            ),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(4),
+              bottomLeft: Radius.circular(4),
             ),
           ),
+          focusedBorder: OutlineInputBorder(
+              gapPadding: 0,
+              borderSide: BorderSide(
+                color: Colors.white,
+              )),
         ),
       );
 }

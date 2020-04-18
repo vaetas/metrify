@@ -17,14 +17,12 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrify/models/activity.dart';
 import 'package:metrify/ui/activity/activity_screen.dart';
 import 'package:metrify/ui/activity/create_activity_screen.dart';
 import 'package:metrify/ui/entry/add_entry_screen.dart';
-import 'package:metrify/ui/settings/settings_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home';
@@ -105,14 +103,6 @@ class HomeScreen extends StatelessWidget {
               SliverAppBar(
                 title: Text('Metrify'),
                 pinned: true,
-                actions: <Widget>[
-                  IconButton(
-                    icon: Icon(FeatherIcons.settings),
-                    onPressed: () {
-                      Navigator.pushNamed(context, SettingsScreen.routeName);
-                    },
-                  )
-                ],
               ),
               activities.isEmpty
                   ? _buildCreateFirstActivity(context)
@@ -131,7 +121,7 @@ class ActivityCard extends StatelessWidget {
 
   ActivityCard({Key key, this.activity, this.onPressed}) : super(key: key);
 
-  final _borderRadius = BorderRadius.circular(5);
+  final _borderRadius = BorderRadius.circular(4);
 
   @override
   Widget build(BuildContext context) {
@@ -140,54 +130,40 @@ class ActivityCard extends StatelessWidget {
       child: Material(
         borderRadius: _borderRadius,
         color: Theme.of(context).cardColor,
+        elevation: 4,
+        shadowColor: Theme.of(context).cardColor.withOpacity(0.2),
         child: InkWell(
           splashColor: activity.color?.withOpacity(0.5),
           borderRadius: _borderRadius,
           onTap: onPressed,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                border: Border(
-                  left: BorderSide(
-                    width: 8,
-                    color: activity.color?.withOpacity(0.75) ??
-                        Theme.of(context).cardColor,
-                  ),
-                ),
-              ),
-              height: 100,
-              child: Stack(
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Container(
-                        child: Text(
-                          activity.name,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        '${activity.entries.length} ${activity.entries.length == 1 ? 'entry' : 'entries'}',
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: Stack(
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        activity.name,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          color: Theme.of(context)
-                              .textTheme
-                              .body1
-                              .color
-                              .withOpacity(0.5),
+                          fontSize: 16,
+                          color: Colors.black.withOpacity(0.8),
                         ),
                       ),
-                    ],
-                  )
-                ],
-              ),
+                    ),
+                    Text(
+                      '${activity.entries.length} ${activity.entries.length == 1 ? 'entry' : 'entries'}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).primaryColor.withOpacity(0.35),
+                      ),
+                    ),
+                  ],
+                )
+              ],
             ),
           ),
         ),

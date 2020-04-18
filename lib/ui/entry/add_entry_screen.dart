@@ -89,7 +89,7 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Entry'),
+        title: Text('Add entry'),
         actions: <Widget>[
           AppBarSubmitButton(onPressed: _canSubmit() ? _submit : null),
         ],
@@ -115,7 +115,8 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
                           padding: EdgeInsets.symmetric(horizontal: 15),
                           child: TextField(
                             controller: numericValueController,
-                            keyboardType: TextInputType.numberWithOptions(decimal: true, signed: true),
+                            keyboardType: TextInputType.numberWithOptions(
+                                decimal: true, signed: true),
                             decoration: InputDecoration(
                               suffixText: numericType.unit,
                               hintText: 'Value',
@@ -151,7 +152,8 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
                             min: rangeType.min,
                             max: rangeType.max,
                             value: sliderPosition ?? rangeType.min.toDouble(),
-                            divisions: rangeType.max.toInt() - rangeType.min.toInt(),
+                            divisions:
+                                rangeType.max.toInt() - rangeType.min.toInt(),
                             label: sliderPosition?.toString() ?? '',
                             onChanged: (value) {
                               setState(() {
@@ -167,7 +169,8 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
                   return Column(
                     children: <Widget>[
                       Container(
-                        margin: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                        margin: const EdgeInsets.only(
+                            left: 15, right: 15, bottom: 15),
                         child: AppDropdownButton<Activity>(
                           value: selectedActivity,
                           items: value.values.toList(),

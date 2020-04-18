@@ -38,6 +38,7 @@ import 'package:metrify/ui/type/create_enum_type_screen.dart';
 import 'package:metrify/ui/type/create_numeric_type_screen.dart';
 import 'package:metrify/ui/type/create_range_type_screen.dart';
 import 'package:metrify/ui/type/type_list_screen.dart';
+import 'package:metrify/ui/view/view_screen.dart';
 import 'package:metrify/ui/widgets/splash_screen.dart';
 import 'package:metrify/utils/generate.dart';
 
@@ -57,6 +58,7 @@ class App extends StatelessWidget {
       routes: {
         Root.routeName: (_) => Root(),
         HomeScreen.routeName: (_) => HomeScreen(),
+        ViewScreen.routeName: (_) => ViewScreen(),
         SettingsScreen.routeName: (_) => SettingsScreen(),
         ActivityListScreen.routeName: (_) => ActivityListScreen(),
         CreateActivityScreen.routeName: (_) => CreateActivityScreen(),
@@ -65,9 +67,8 @@ class App extends StatelessWidget {
         CreateCategoryScreen.routeName: (_) => CreateCategoryScreen(),
         ExportScreen.routeName: (_) => ExportScreen(),
       },
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
       onGenerateRoute: (settings) {
         MaterialPageRoute getDialogRoute(Widget screen) {

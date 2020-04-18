@@ -19,12 +19,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrify/models/activity.dart';
 import 'package:metrify/models/entry.dart';
 import 'package:metrify/models/group.dart';
+import 'package:metrify/resources/theme.dart';
 import 'package:metrify/ui/entry/add_entry_screen.dart';
 import 'package:metrify/utils/grouping.dart';
 import 'package:supercharged/supercharged.dart';
@@ -36,6 +36,15 @@ enum ActivityMenuItem {
 Map<ActivityMenuItem, String> _activityMenuItems = {
   ActivityMenuItem.group: 'Group',
 };
+
+Future _deleteEntry(Entry entry, Activity activity) async {
+  activity.entries.remove(entry);
+  activity.save();
+
+  if (entry.isInBox) {
+    entry.delete();
+  }
+}
 
 class ActivityScreen extends StatefulWidget {
   final Activity activity;
@@ -49,12 +58,12 @@ class ActivityScreen extends StatefulWidget {
 class _ActivityScreenState extends State<ActivityScreen> {
   EntryGrouping _grouping;
 
-  final Box<Activity> _box = Hive.box<Activity>(activityBox);
+  final _activityBox = Hive.box<Activity>(activityBox);
 
   @override
   void initState() {
     super.initState();
-    _grouping = widget.activity.grouping ?? EntryGrouping.minute;
+    _grouping = widget.activity.grouping ?? EntryGrouping.none;
   }
 
   void _showGroupingModal() {
@@ -83,12 +92,56 @@ class _ActivityScreenState extends State<ActivityScreen> {
     );
   }
 
+  Widget _buildList(
+    EntryGrouping grouping,
+    Activity activity,
+  ) {
+    final sortedEntries = activity.entries
+        .sortedBy((a, b) => a.timestamp.compareTo(b.timestamp))
+        .reversed
+        .toList();
+
+    if (grouping == EntryGrouping.none) {
+      return SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            return _EntryItem(
+              onDelete: () => _deleteEntry(sortedEntries[index], activity),
+              entry: sortedEntries[index],
+              activity: activity,
+            );
+          },
+          childCount: sortedEntries.length,
+        ),
+      );
+    }
+
+    final entryGroups = groupEntries(sortedEntries, grouping);
+
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          final date = activity.entries.first.timestamp
+              .getWithResolution(grouping)
+              .getPreviousGroup(grouping, n: index);
+          return _EntryGroupItem(
+            activity: activity,
+            groupedEntry: entryGroups[date] ??
+                GroupedEntry(
+                  timestamp: date,
+                  entries: [],
+                  type: grouping,
+                ),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    groupEntries(widget.activity.entries, _grouping);
-
     return ValueListenableBuilder<Box<Activity>>(
-      valueListenable: _box.listenable(keys: [widget.activity.key]),
+      valueListenable: _activityBox.listenable(keys: [widget.activity.key]),
       builder: (context, value, child) {
         final activity = value.get(widget.activity.key);
 
@@ -96,7 +149,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
             heroTag: 'AddEntryFab',
-            backgroundColor: widget.activity.color,
+            backgroundColor: AppTheme.black,
             foregroundColor: Theme.of(context).scaffoldBackgroundColor,
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -130,37 +183,9 @@ class _ActivityScreenState extends State<ActivityScreen> {
                   )
                 ],
               ),
-              ...groupEntries(activity.entries, _grouping)
-                  .sortedBy((a, b) => a.timestamp.compareTo(b.timestamp))
-                  .reversed
-                  .map((group) {
-                return SliverStickyHeader(
-                  header: _GroupHeader(title: formatGroupDate(group.timestamp, group.type)),
-                  sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final entry = group.entries
-                            .sortedBy((a, b) => a.timestamp.compareTo(b.timestamp))
-                            .reversed
-                            .elementAt(index);
-                        return _EntryItem(
-                          entry: entry,
-                          activity: activity,
-                          onDelete: () async {
-                            activity.entries.removeAt(index);
-                            if (entry.isInBox) {
-                              await entry.delete();
-                            }
-
-                            await activity.save();
-                          },
-                        );
-                      },
-                      childCount: group.entries.length,
-                    ),
-                  ),
-                );
-              }).toList(),
+              activity.entries.isNotEmpty
+                  ? _buildList(_grouping, activity)
+                  : SliverFillRemaining(child: Center(child: Text('No data'))),
             ],
           ),
         );
@@ -174,7 +199,8 @@ class _EntryItem extends StatelessWidget {
   final Activity activity;
   final VoidCallback onDelete;
 
-  _EntryItem({Key key, this.entry, this.activity, this.onDelete}) : super(key: key);
+  _EntryItem({Key key, this.entry, this.activity, this.onDelete})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -183,15 +209,20 @@ class _EntryItem extends StatelessWidget {
       actionExtentRatio: 0.15,
       actions: <Widget>[
         IconSlideAction(
-          icon: FeatherIcons.trash2,
-          color: Colors.red,
           onTap: onDelete,
+          iconWidget: Icon(
+            FeatherIcons.trash2,
+            color: Colors.red,
+          ),
         ),
       ],
       child: Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
         child: ListTile(
           title: Text(entry.format(activity.type)),
+          subtitle: Text(
+            entry.timestamp.toIso8601String(),
+            style: Theme.of(context).textTheme.caption,
+          ),
         ),
       ),
     );
@@ -199,30 +230,58 @@ class _EntryItem extends StatelessWidget {
 }
 
 class _GroupHeader extends StatelessWidget {
-  final String title;
+  final GroupedEntry groupedEntry;
 
-  _GroupHeader({Key key, this.title}) : super(key: key);
+  _GroupHeader({Key key, this.groupedEntry}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        border: Border(
-          bottom: BorderSide(
-            width: 1,
-            color: Theme.of(context).cardColor,
-          ),
-        ),
-      ),
+      width: double.infinity,
       child: Text(
-        title,
+        formatGroupDate(groupedEntry.timestamp, groupedEntry.type),
         style: TextStyle(
           fontWeight: FontWeight.w600,
-          color: Theme.of(context).textTheme.body1.color.withOpacity(0.5),
+          color: Theme.of(context).textTheme.body1.color.withOpacity(0.3),
         ),
       ),
+    );
+  }
+}
+
+class _EntryGroupItem extends StatelessWidget {
+  final GroupedEntry groupedEntry;
+  final Activity activity;
+
+  _EntryGroupItem({
+    Key key,
+    this.groupedEntry,
+    this.activity,
+  }) : super(key: key);
+
+  bool get empty => groupedEntry == null;
+
+  bool get notEmpty => !empty;
+
+  @override
+  Widget build(BuildContext context) {
+    final children = groupedEntry.entries.map((entry) {
+      return _EntryItem(
+        activity: activity,
+        entry: entry,
+        onDelete: () => _deleteEntry(entry, activity),
+      );
+    }).toList();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        _GroupHeader(groupedEntry: groupedEntry),
+        if (notEmpty) Column(children: children)
+      ],
     );
   }
 }
