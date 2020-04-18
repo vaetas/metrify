@@ -13,8 +13,6 @@ class EntryGroupingAdapter extends TypeAdapter<EntryGrouping> {
   @override
   EntryGrouping read(BinaryReader reader) {
     switch (reader.readByte()) {
-      case 0:
-        return EntryGrouping.minute;
       case 1:
         return EntryGrouping.hour;
       case 2:
@@ -25,6 +23,8 @@ class EntryGroupingAdapter extends TypeAdapter<EntryGrouping> {
         return EntryGrouping.month;
       case 5:
         return EntryGrouping.year;
+      case 6:
+        return EntryGrouping.none;
       default:
         return null;
     }
@@ -33,9 +33,6 @@ class EntryGroupingAdapter extends TypeAdapter<EntryGrouping> {
   @override
   void write(BinaryWriter writer, EntryGrouping obj) {
     switch (obj) {
-      case EntryGrouping.minute:
-        writer.writeByte(0);
-        break;
       case EntryGrouping.hour:
         writer.writeByte(1);
         break;
@@ -50,6 +47,9 @@ class EntryGroupingAdapter extends TypeAdapter<EntryGrouping> {
         break;
       case EntryGrouping.year:
         writer.writeByte(5);
+        break;
+      case EntryGrouping.none:
+        writer.writeByte(6);
         break;
     }
   }

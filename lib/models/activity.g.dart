@@ -102,10 +102,10 @@ T _$enumDecodeNullable<T>(
 }
 
 const _$EntryGroupingEnumMap = {
-  EntryGrouping.minute: 'minute',
   EntryGrouping.hour: 'hour',
   EntryGrouping.day: 'day',
   EntryGrouping.week: 'week',
   EntryGrouping.month: 'month',
   EntryGrouping.year: 'year',
+  EntryGrouping.none: 'none',
 };

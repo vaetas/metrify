@@ -63,12 +63,13 @@ class Activity extends HiveObject {
     this.type,
     this.entries, {
     Color color,
-    this.grouping = EntryGrouping.minute,
+    this.grouping = EntryGrouping.none,
   }) {
     _color = color?.value;
   }
 
-  factory Activity.fromJson(Map<String, dynamic> json) => _$ActivityFromJson(json);
+  factory Activity.fromJson(Map<String, dynamic> json) =>
+      _$ActivityFromJson(json);
 
   Map<String, dynamic> toJson() => _$ActivityToJson(this);
 
@@ -89,13 +90,21 @@ class Activity extends HiveObject {
           _color == other._color;
 
   @override
-  int get hashCode => name.hashCode ^ categories.hashCode ^ entries.hashCode ^ type.hashCode ^ _color.hashCode;
+  int get hashCode =>
+      name.hashCode ^
+      categories.hashCode ^
+      entries.hashCode ^
+      type.hashCode ^
+      _color.hashCode;
 
-  static List<Map<String, dynamic>> _entriesToJson(List<Entry> entries) => entries.map((e) => e.toJson()).toList();
+  static List<Map<String, dynamic>> _entriesToJson(List<Entry> entries) =>
+      entries.map((e) => e.toJson()).toList();
 
-  static List<Entry> _entriesFromJson(List<Map<String, dynamic>> json) => json.map((e) => Entry.fromJson(e)).toList();
+  static List<Entry> _entriesFromJson(List<Map<String, dynamic>> json) =>
+      json.map((e) => Entry.fromJson(e)).toList();
 
   static Map<String, dynamic> _typeToJson(ActivityType type) => type.toJson();
 
-  static ActivityType _typeFromJson(Map<String, dynamic> json) => ActivityType.fromJson(json);
+  static ActivityType _typeFromJson(Map<String, dynamic> json) =>
+      ActivityType.fromJson(json);
 }

@@ -22,9 +22,6 @@ part 'group.g.dart';
 
 @HiveType(typeId: 30)
 enum EntryGrouping {
-  @HiveField(0)
-  minute,
-
   @HiveField(1)
   hour,
 
@@ -39,10 +36,13 @@ enum EntryGrouping {
 
   @HiveField(5)
   year,
+
+  @HiveField(6)
+  none,
 }
 
 const Map<EntryGrouping, String> entryGroupingName = {
-  EntryGrouping.minute: 'Minute',
+  EntryGrouping.none: 'None',
   EntryGrouping.hour: 'Hour',
   EntryGrouping.day: 'Day',
   EntryGrouping.week: 'Week',
