@@ -121,7 +121,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
-          final date = activity.entries.first.timestamp
+          final date = activity.entries.last.timestamp
               .getWithResolution(grouping)
               .getPreviousGroup(grouping, n: index);
           return _EntryGroupItem(
