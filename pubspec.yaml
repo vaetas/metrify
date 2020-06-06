@@ -4,7 +4,7 @@ description: Track Your Metrics
 version: 0.1.2+3
 
 environment:
-  sdk: ">=2.6.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -15,21 +15,21 @@ dependencies:
   flutter_slidable: ^0.5.4
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
-  url_launcher: ^5.4.2
+  url_launcher: ^5.4.10
   intl: ^0.16.1
-  package_info: ^0.4.0+14
+  package_info: ^0.4.1
   flutter_sticky_header: ^0.4.2
-  supercharged: ^1.2.1
+  supercharged: ^1.6.0
   json_annotation: ^3.0.1
-  permission_handler: ^4.4.0+hotfix.1
+  permission_handler: ^4.2.0
   jiffy: ^3.0.1
+  fl_chart: ^0.10.0
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+  test: ^1.14.7
   hive_generator: ^0.7.0+2
-  build_runner: ^1.7.4
-  json_serializable: ^3.2.5
+  build_runner: ^1.10.0
+  json_serializable: ^3.3.0
 
 flutter:
   uses-material-design: true

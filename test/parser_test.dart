@@ -16,8 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import 'package:flutter_test/flutter_test.dart';
 import 'package:metrify/utils/parsing.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('Parsing', () {
