@@ -20,6 +20,7 @@ import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:metrify/models/group.dart';
 import 'package:metrify/models/type.dart';
+import 'package:supercharged/supercharged.dart';
 
 part 'entry.g.dart';
 
@@ -66,14 +67,19 @@ class Entry extends HiveObject {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Entry && runtimeType == other.runtimeType && timestamp == other.timestamp && value == other.value;
+      other is Entry &&
+          runtimeType == other.runtimeType &&
+          timestamp == other.timestamp &&
+          value == other.value;
 
   @override
   int get hashCode => timestamp.hashCode ^ value.hashCode;
 
-  static int _dateTimeToJson(DateTime dateTime) => dateTime.millisecondsSinceEpoch;
+  static int _dateTimeToJson(DateTime dateTime) =>
+      dateTime.millisecondsSinceEpoch;
 
-  static DateTime _dateTimeFromJson(int unixTime) => DateTime.fromMillisecondsSinceEpoch(unixTime);
+  static DateTime _dateTimeFromJson(int unixTime) =>
+      DateTime.fromMillisecondsSinceEpoch(unixTime);
 }
 
 class GroupedEntry {
@@ -84,6 +90,8 @@ class GroupedEntry {
   final List<Entry> entries;
 
   GroupedEntry({this.timestamp, this.type, this.entries});
+
+  double get average => entries.averageBy((e) => e.value);
 
   @override
   bool operator ==(Object other) =>
@@ -98,5 +106,6 @@ class GroupedEntry {
   int get hashCode => timestamp.hashCode ^ type.hashCode ^ entries.hashCode;
 
   @override
-  String toString() => 'GroupedEntry{timestamp: $timestamp, type: $type, entries: $entries}';
+  String toString() =>
+      'GroupedEntry{timestamp: $timestamp, type: $type, entries: $entries}';
 }

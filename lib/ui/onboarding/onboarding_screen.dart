@@ -177,7 +177,7 @@ class _AboutView extends StatelessWidget {
           WidgetSpan(
               child: Text(
             'This app is in very initial stage of development. Many features are missing and'
-            ' bugs might appear. Be careful.',
+            ' bugs might appear.',
           ))
         ])),
       ),

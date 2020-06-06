@@ -52,6 +52,11 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
     _entryBox = Hive.box<Entry>(entryBox);
 
     selectedActivity = widget.activity;
+
+//    final entry = Entry(DateTime.now().subtract(Duration(days: 3)), 20);
+//    _entryBox.add(entry);
+//    selectedActivity.entries.add(entry);
+//    selectedActivity.save();
   }
 
   bool _canSubmit() => true;

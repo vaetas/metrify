@@ -17,12 +17,14 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:metrify/models/activity.dart';
 import 'package:metrify/ui/activity/activity_screen.dart';
 import 'package:metrify/ui/activity/create_activity_screen.dart';
 import 'package:metrify/ui/entry/add_entry_screen.dart';
+import 'package:metrify/ui/settings/settings_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home';
@@ -103,6 +105,14 @@ class HomeScreen extends StatelessWidget {
               SliverAppBar(
                 title: Text('Metrify'),
                 pinned: true,
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(FeatherIcons.settings),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(SettingsScreen.routeName);
+                    },
+                  ),
+                ],
               ),
               activities.isEmpty
                   ? _buildCreateFirstActivity(context)
@@ -128,10 +138,11 @@ class ActivityCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
       child: Material(
+        type: MaterialType.card,
         borderRadius: _borderRadius,
         color: Theme.of(context).cardColor,
-        elevation: 4,
-        shadowColor: Theme.of(context).cardColor.withOpacity(0.2),
+        elevation: 0,
+        shadowColor: Colors.black,
         child: InkWell(
           splashColor: activity.color?.withOpacity(0.5),
           borderRadius: _borderRadius,

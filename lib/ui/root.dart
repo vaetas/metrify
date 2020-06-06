@@ -57,6 +57,12 @@ class _RootState extends State<Root> {
             (value.get(ConfigKeys.passedOnboarding) as bool) ?? false;
 
         if (passedOnboarding) {
+          return HomeScreen();
+        } else {
+          return OnboardingScreen();
+        }
+
+        if (passedOnboarding) {
           return Scaffold(
             body: IndexedStack(
               index: currentScreenIndex,
