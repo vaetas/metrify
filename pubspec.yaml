@@ -12,21 +12,21 @@ dependencies:
   toast: ^0.1.5
   flutter_speed_dial: ^1.2.5
   flutter_feather_icons: ^1.0.3
-  flutter_slidable: ^0.5.4
+  flutter_slidable: ^0.5.5
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
-  url_launcher: ^5.4.10
+  url_launcher: ^5.5.0
   intl: ^0.16.1
   package_info: ^0.4.1
-  flutter_sticky_header: ^0.4.2
-  supercharged: ^1.6.0
+  flutter_sticky_header: ^0.4.4
+  supercharged: ^1.7.0
   json_annotation: ^3.0.1
-  permission_handler: ^4.2.0
+  permission_handler: ^4.2.0 # Update requires code change
   jiffy: ^3.0.1
-  fl_chart: ^0.10.0
+  fl_chart: ^0.10.1
 
 dev_dependencies:
-  test: ^1.14.7
+  test: ^1.15.3
   hive_generator: ^0.7.0+2
   build_runner: ^1.10.0
   json_serializable: ^3.3.0
