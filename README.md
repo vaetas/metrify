@@ -4,6 +4,8 @@
 
 <a href='https://play.google.com/store/apps/details?id=net.vojtech.metrify'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width=200/></a>
 
+![Screenshots](screenshots.jpg)
+
 Metrify allows you to keep metrics logs for everything. Do you want single app for your running statistics, weight measurements or even mood? Then Metrify is for you.
 
 Define your custom types with numbers, enumerations or ranges. Create activities and track your progress. Use your own data types for maximum flexibility.
